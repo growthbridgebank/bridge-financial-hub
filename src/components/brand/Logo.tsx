@@ -24,7 +24,7 @@ export function Logo({
         <span className="flex flex-col leading-none">
           <span
             className={cn(
-              "font-display text-base font-semibold tracking-tight",
+              "whitespace-nowrap font-display text-sm font-semibold tracking-tight sm:text-base",
               variant === "light" ? "text-primary-foreground" : "text-foreground",
             )}
           >
