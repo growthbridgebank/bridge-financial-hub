@@ -23,8 +23,10 @@ import { Route as RewardsOverviewRouteImport } from './routes/rewards-overview'
 import { Route as SavingsRouteImport } from './routes/savings'
 import { Route as SecurityOverviewRouteImport } from './routes/security-overview'
 import { Route as LegalDisclosuresRouteImport } from './routes/legal/disclosures'
+import { Route as LegalElectronicCommunicationsRouteImport } from './routes/legal/electronic-communications'
 import { Route as LegalInvestmentRiskRouteImport } from './routes/legal/investment-risk'
 import { Route as LegalPrivacyRouteImport } from './routes/legal/privacy'
+import { Route as LegalRewardsTermsRouteImport } from './routes/legal/rewards-terms'
 import { Route as LegalTermsRouteImport } from './routes/legal/terms'
 
 const IndexRoute = IndexRouteImport.update({
@@ -97,6 +99,12 @@ const LegalDisclosuresRoute = LegalDisclosuresRouteImport.update({
   path: '/legal/disclosures',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LegalElectronicCommunicationsRoute =
+  LegalElectronicCommunicationsRouteImport.update({
+    id: '/legal/electronic-communications',
+    path: '/legal/electronic-communications',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LegalInvestmentRiskRoute = LegalInvestmentRiskRouteImport.update({
   id: '/legal/investment-risk',
   path: '/legal/investment-risk',
@@ -105,6 +113,11 @@ const LegalInvestmentRiskRoute = LegalInvestmentRiskRouteImport.update({
 const LegalPrivacyRoute = LegalPrivacyRouteImport.update({
   id: '/legal/privacy',
   path: '/legal/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalRewardsTermsRoute = LegalRewardsTermsRouteImport.update({
+  id: '/legal/rewards-terms',
+  path: '/legal/rewards-terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LegalTermsRoute = LegalTermsRouteImport.update({
@@ -128,8 +141,10 @@ export interface FileRoutesByFullPath {
   '/savings': typeof SavingsRoute
   '/security-overview': typeof SecurityOverviewRoute
   '/legal/disclosures': typeof LegalDisclosuresRoute
+  '/legal/electronic-communications': typeof LegalElectronicCommunicationsRoute
   '/legal/investment-risk': typeof LegalInvestmentRiskRoute
   '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/rewards-terms': typeof LegalRewardsTermsRoute
   '/legal/terms': typeof LegalTermsRoute
 }
 export interface FileRoutesByTo {
@@ -147,8 +162,10 @@ export interface FileRoutesByTo {
   '/savings': typeof SavingsRoute
   '/security-overview': typeof SecurityOverviewRoute
   '/legal/disclosures': typeof LegalDisclosuresRoute
+  '/legal/electronic-communications': typeof LegalElectronicCommunicationsRoute
   '/legal/investment-risk': typeof LegalInvestmentRiskRoute
   '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/rewards-terms': typeof LegalRewardsTermsRoute
   '/legal/terms': typeof LegalTermsRoute
 }
 export interface FileRoutesById {
@@ -167,8 +184,10 @@ export interface FileRoutesById {
   '/savings': typeof SavingsRoute
   '/security-overview': typeof SecurityOverviewRoute
   '/legal/disclosures': typeof LegalDisclosuresRoute
+  '/legal/electronic-communications': typeof LegalElectronicCommunicationsRoute
   '/legal/investment-risk': typeof LegalInvestmentRiskRoute
   '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/rewards-terms': typeof LegalRewardsTermsRoute
   '/legal/terms': typeof LegalTermsRoute
 }
 export interface FileRouteTypes {
@@ -188,8 +207,10 @@ export interface FileRouteTypes {
     | '/savings'
     | '/security-overview'
     | '/legal/disclosures'
+    | '/legal/electronic-communications'
     | '/legal/investment-risk'
     | '/legal/privacy'
+    | '/legal/rewards-terms'
     | '/legal/terms'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -207,8 +228,10 @@ export interface FileRouteTypes {
     | '/savings'
     | '/security-overview'
     | '/legal/disclosures'
+    | '/legal/electronic-communications'
     | '/legal/investment-risk'
     | '/legal/privacy'
+    | '/legal/rewards-terms'
     | '/legal/terms'
   id:
     | '__root__'
@@ -226,8 +249,10 @@ export interface FileRouteTypes {
     | '/savings'
     | '/security-overview'
     | '/legal/disclosures'
+    | '/legal/electronic-communications'
     | '/legal/investment-risk'
     | '/legal/privacy'
+    | '/legal/rewards-terms'
     | '/legal/terms'
   fileRoutesById: FileRoutesById
 }
@@ -246,8 +271,10 @@ export interface RootRouteChildren {
   SavingsRoute: typeof SavingsRoute
   SecurityOverviewRoute: typeof SecurityOverviewRoute
   LegalDisclosuresRoute: typeof LegalDisclosuresRoute
+  LegalElectronicCommunicationsRoute: typeof LegalElectronicCommunicationsRoute
   LegalInvestmentRiskRoute: typeof LegalInvestmentRiskRoute
   LegalPrivacyRoute: typeof LegalPrivacyRoute
+  LegalRewardsTermsRoute: typeof LegalRewardsTermsRoute
   LegalTermsRoute: typeof LegalTermsRoute
 }
 
@@ -351,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalDisclosuresRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/legal/electronic-communications': {
+      id: '/legal/electronic-communications'
+      path: '/legal/electronic-communications'
+      fullPath: '/legal/electronic-communications'
+      preLoaderRoute: typeof LegalElectronicCommunicationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/legal/investment-risk': {
       id: '/legal/investment-risk'
       path: '/legal/investment-risk'
@@ -363,6 +397,13 @@ declare module '@tanstack/react-router' {
       path: '/legal/privacy'
       fullPath: '/legal/privacy'
       preLoaderRoute: typeof LegalPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/rewards-terms': {
+      id: '/legal/rewards-terms'
+      path: '/legal/rewards-terms'
+      fullPath: '/legal/rewards-terms'
+      preLoaderRoute: typeof LegalRewardsTermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/legal/terms': {
@@ -390,8 +431,10 @@ const rootRouteChildren: RootRouteChildren = {
   SavingsRoute: SavingsRoute,
   SecurityOverviewRoute: SecurityOverviewRoute,
   LegalDisclosuresRoute: LegalDisclosuresRoute,
+  LegalElectronicCommunicationsRoute: LegalElectronicCommunicationsRoute,
   LegalInvestmentRiskRoute: LegalInvestmentRiskRoute,
   LegalPrivacyRoute: LegalPrivacyRoute,
+  LegalRewardsTermsRoute: LegalRewardsTermsRoute,
   LegalTermsRoute: LegalTermsRoute,
 }
 export const routeTree = rootRouteImport
