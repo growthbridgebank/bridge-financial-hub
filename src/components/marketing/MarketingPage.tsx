@@ -1,0 +1,74 @@
+import type { ReactNode } from "react";
+import { SiteFooter } from "@/components/marketing/SiteFooter";
+import { SiteHeader } from "@/components/marketing/SiteHeader";
+
+export function MarketingShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex min-h-screen flex-col bg-background">
+      <SiteHeader />
+      <main className="flex-1">{children}</main>
+      <SiteFooter />
+    </div>
+  );
+}
+
+export function PageHero({
+  eyebrow,
+  title,
+  description,
+}: {
+  eyebrow: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <section className="bg-gradient-navy text-primary-foreground">
+      <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6 sm:py-20">
+        <p className="text-xs font-semibold tracking-[0.24em] text-gold uppercase">{eyebrow}</p>
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
+        <p className="mt-5 max-w-2xl text-base text-primary-foreground/75 sm:text-lg">{description}</p>
+      </div>
+    </section>
+  );
+}
+
+export function Prose({ children }: { children: ReactNode }) {
+  return (
+    <section className="mx-auto w-full max-w-4xl px-4 py-14 sm:px-6">
+      <div className="space-y-8 text-sm leading-relaxed text-muted-foreground [&_h2]:mb-3 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-foreground [&_li]:mb-2 [&_ul]:list-disc [&_ul]:pl-5">
+        {children}
+      </div>
+    </section>
+  );
+}
+
+export function FeatureGrid({
+  items,
+}: {
+  items: { title: string; description: string }[];
+}) {
+  return (
+    <section className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((item) => (
+          <article key={item.title} className="rounded-xl border border-border bg-card p-6 shadow-card">
+            <h2 className="font-display text-lg font-semibold text-foreground">{item.title}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export function ProviderNotice({ provider }: { provider: string }) {
+  return (
+    <div className="mx-auto w-full max-w-4xl px-4 pb-14 sm:px-6">
+      <p className="rounded-lg border border-gold/40 bg-gold/10 p-4 text-sm text-foreground">
+        <strong className="font-semibold">Provider required.</strong> {provider} functionality becomes available only
+        after GrowthBridge Bank connects the corresponding regulated provider. Until then, no balances, transactions, or
+        approvals are represented as real.
+      </p>
+    </div>
+  );
+}
