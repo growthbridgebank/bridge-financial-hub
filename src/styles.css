@@ -167,3 +167,33 @@
     color: var(--color-foreground);
   }
 }
+
+@utility bg-gradient-navy {
+  background-image: var(--gradient-navy);
+}
+
+@utility bg-gradient-gold {
+  background-image: var(--gradient-gold);
+}
+
+@utility text-gradient-gold {
+  background-image: var(--gradient-gold);
+  background-clip: text;
+  color: transparent;
+}
+
+@utility shadow-elevated {
+  box-shadow: var(--shadow-elevated);
+}
+
+@utility shadow-card {
+  box-shadow: var(--shadow-card);
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+}
