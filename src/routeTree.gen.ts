@@ -10,15 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as BusinessRouteImport } from './routes/business'
+import { Route as CardsOverviewRouteImport } from './routes/cards-overview'
 import { Route as CheckingRouteImport } from './routes/checking'
+import { Route as HelpRouteImport } from './routes/help'
 import { Route as InvestingRouteImport } from './routes/investing'
 import { Route as PersonalRouteImport } from './routes/personal'
+import { Route as RewardsOverviewRouteImport } from './routes/rewards-overview'
 import { Route as SavingsRouteImport } from './routes/savings'
+import { Route as SecurityOverviewRouteImport } from './routes/security-overview'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BusinessRoute = BusinessRouteImport.update({
@@ -26,9 +36,19 @@ const BusinessRoute = BusinessRouteImport.update({
   path: '/business',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CardsOverviewRoute = CardsOverviewRouteImport.update({
+  id: '/cards-overview',
+  path: '/cards-overview',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckingRoute = CheckingRouteImport.update({
   id: '/checking',
   path: '/checking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InvestingRoute = InvestingRouteImport.update({
@@ -41,60 +61,116 @@ const PersonalRoute = PersonalRouteImport.update({
   path: '/personal',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RewardsOverviewRoute = RewardsOverviewRouteImport.update({
+  id: '/rewards-overview',
+  path: '/rewards-overview',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SavingsRoute = SavingsRouteImport.update({
   id: '/savings',
   path: '/savings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SecurityOverviewRoute = SecurityOverviewRouteImport.update({
+  id: '/security-overview',
+  path: '/security-overview',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/business': typeof BusinessRoute
+  '/cards-overview': typeof CardsOverviewRoute
   '/checking': typeof CheckingRoute
+  '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
   '/personal': typeof PersonalRoute
+  '/rewards-overview': typeof RewardsOverviewRoute
   '/savings': typeof SavingsRoute
+  '/security-overview': typeof SecurityOverviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/business': typeof BusinessRoute
+  '/cards-overview': typeof CardsOverviewRoute
   '/checking': typeof CheckingRoute
+  '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
   '/personal': typeof PersonalRoute
+  '/rewards-overview': typeof RewardsOverviewRoute
   '/savings': typeof SavingsRoute
+  '/security-overview': typeof SecurityOverviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/business': typeof BusinessRoute
+  '/cards-overview': typeof CardsOverviewRoute
   '/checking': typeof CheckingRoute
+  '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
   '/personal': typeof PersonalRoute
+  '/rewards-overview': typeof RewardsOverviewRoute
   '/savings': typeof SavingsRoute
+  '/security-overview': typeof SecurityOverviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/business' | '/checking' | '/investing' | '/personal' | '/savings'
+    | '/'
+    | '/about'
+    | '/business'
+    | '/cards-overview'
+    | '/checking'
+    | '/help'
+    | '/investing'
+    | '/personal'
+    | '/rewards-overview'
+    | '/savings'
+    | '/security-overview'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/business' | '/checking' | '/investing' | '/personal' | '/savings'
+  to:
+    | '/'
+    | '/about'
+    | '/business'
+    | '/cards-overview'
+    | '/checking'
+    | '/help'
+    | '/investing'
+    | '/personal'
+    | '/rewards-overview'
+    | '/savings'
+    | '/security-overview'
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/business'
+    | '/cards-overview'
     | '/checking'
+    | '/help'
     | '/investing'
     | '/personal'
+    | '/rewards-overview'
     | '/savings'
+    | '/security-overview'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   BusinessRoute: typeof BusinessRoute
+  CardsOverviewRoute: typeof CardsOverviewRoute
   CheckingRoute: typeof CheckingRoute
+  HelpRoute: typeof HelpRoute
   InvestingRoute: typeof InvestingRoute
   PersonalRoute: typeof PersonalRoute
+  RewardsOverviewRoute: typeof RewardsOverviewRoute
   SavingsRoute: typeof SavingsRoute
+  SecurityOverviewRoute: typeof SecurityOverviewRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -106,6 +182,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/business': {
       id: '/business'
       path: '/business'
@@ -113,11 +196,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BusinessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cards-overview': {
+      id: '/cards-overview'
+      path: '/cards-overview'
+      fullPath: '/cards-overview'
+      preLoaderRoute: typeof CardsOverviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checking': {
       id: '/checking'
       path: '/checking'
       fullPath: '/checking'
       preLoaderRoute: typeof CheckingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/investing': {
@@ -134,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PersonalRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rewards-overview': {
+      id: '/rewards-overview'
+      path: '/rewards-overview'
+      fullPath: '/rewards-overview'
+      preLoaderRoute: typeof RewardsOverviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/savings': {
       id: '/savings'
       path: '/savings'
@@ -141,16 +245,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SavingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/security-overview': {
+      id: '/security-overview'
+      path: '/security-overview'
+      fullPath: '/security-overview'
+      preLoaderRoute: typeof SecurityOverviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   BusinessRoute: BusinessRoute,
+  CardsOverviewRoute: CardsOverviewRoute,
   CheckingRoute: CheckingRoute,
+  HelpRoute: HelpRoute,
   InvestingRoute: InvestingRoute,
   PersonalRoute: PersonalRoute,
+  RewardsOverviewRoute: RewardsOverviewRoute,
   SavingsRoute: SavingsRoute,
+  SecurityOverviewRoute: SecurityOverviewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
