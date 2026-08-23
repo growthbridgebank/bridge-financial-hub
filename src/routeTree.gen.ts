@@ -10,33 +10,311 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as BusinessRouteImport } from './routes/business'
+import { Route as CardsOverviewRouteImport } from './routes/cards-overview'
+import { Route as CareersRouteImport } from './routes/careers'
+import { Route as CheckingRouteImport } from './routes/checking'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as HelpRouteImport } from './routes/help'
+import { Route as InvestingRouteImport } from './routes/investing'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as PersonalRouteImport } from './routes/personal'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as RewardsOverviewRouteImport } from './routes/rewards-overview'
+import { Route as SavingsRouteImport } from './routes/savings'
+import { Route as SecurityOverviewRouteImport } from './routes/security-overview'
+import { Route as LegalDisclosuresRouteImport } from './routes/legal/disclosures'
+import { Route as LegalElectronicCommunicationsRouteImport } from './routes/legal/electronic-communications'
+import { Route as LegalInvestmentRiskRouteImport } from './routes/legal/investment-risk'
+import { Route as LegalPrivacyRouteImport } from './routes/legal/privacy'
+import { Route as LegalRewardsTermsRouteImport } from './routes/legal/rewards-terms'
+import { Route as LegalTermsRouteImport } from './routes/legal/terms'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessRoute = BusinessRouteImport.update({
+  id: '/business',
+  path: '/business',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CardsOverviewRoute = CardsOverviewRouteImport.update({
+  id: '/cards-overview',
+  path: '/cards-overview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckingRoute = CheckingRouteImport.update({
+  id: '/checking',
+  path: '/checking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvestingRoute = InvestingRouteImport.update({
+  id: '/investing',
+  path: '/investing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersonalRoute = PersonalRouteImport.update({
+  id: '/personal',
+  path: '/personal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RewardsOverviewRoute = RewardsOverviewRouteImport.update({
+  id: '/rewards-overview',
+  path: '/rewards-overview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SavingsRoute = SavingsRouteImport.update({
+  id: '/savings',
+  path: '/savings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityOverviewRoute = SecurityOverviewRouteImport.update({
+  id: '/security-overview',
+  path: '/security-overview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalDisclosuresRoute = LegalDisclosuresRouteImport.update({
+  id: '/legal/disclosures',
+  path: '/legal/disclosures',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalElectronicCommunicationsRoute =
+  LegalElectronicCommunicationsRouteImport.update({
+    id: '/legal/electronic-communications',
+    path: '/legal/electronic-communications',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const LegalInvestmentRiskRoute = LegalInvestmentRiskRouteImport.update({
+  id: '/legal/investment-risk',
+  path: '/legal/investment-risk',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalPrivacyRoute = LegalPrivacyRouteImport.update({
+  id: '/legal/privacy',
+  path: '/legal/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalRewardsTermsRoute = LegalRewardsTermsRouteImport.update({
+  id: '/legal/rewards-terms',
+  path: '/legal/rewards-terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalTermsRoute = LegalTermsRouteImport.update({
+  id: '/legal/terms',
+  path: '/legal/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/business': typeof BusinessRoute
+  '/cards-overview': typeof CardsOverviewRoute
+  '/careers': typeof CareersRoute
+  '/checking': typeof CheckingRoute
+  '/contact': typeof ContactRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/help': typeof HelpRoute
+  '/investing': typeof InvestingRoute
+  '/login': typeof LoginRoute
+  '/personal': typeof PersonalRoute
+  '/register': typeof RegisterRoute
+  '/rewards-overview': typeof RewardsOverviewRoute
+  '/savings': typeof SavingsRoute
+  '/security-overview': typeof SecurityOverviewRoute
+  '/legal/disclosures': typeof LegalDisclosuresRoute
+  '/legal/electronic-communications': typeof LegalElectronicCommunicationsRoute
+  '/legal/investment-risk': typeof LegalInvestmentRiskRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/rewards-terms': typeof LegalRewardsTermsRoute
+  '/legal/terms': typeof LegalTermsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/business': typeof BusinessRoute
+  '/cards-overview': typeof CardsOverviewRoute
+  '/careers': typeof CareersRoute
+  '/checking': typeof CheckingRoute
+  '/contact': typeof ContactRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/help': typeof HelpRoute
+  '/investing': typeof InvestingRoute
+  '/login': typeof LoginRoute
+  '/personal': typeof PersonalRoute
+  '/register': typeof RegisterRoute
+  '/rewards-overview': typeof RewardsOverviewRoute
+  '/savings': typeof SavingsRoute
+  '/security-overview': typeof SecurityOverviewRoute
+  '/legal/disclosures': typeof LegalDisclosuresRoute
+  '/legal/electronic-communications': typeof LegalElectronicCommunicationsRoute
+  '/legal/investment-risk': typeof LegalInvestmentRiskRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/rewards-terms': typeof LegalRewardsTermsRoute
+  '/legal/terms': typeof LegalTermsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/business': typeof BusinessRoute
+  '/cards-overview': typeof CardsOverviewRoute
+  '/careers': typeof CareersRoute
+  '/checking': typeof CheckingRoute
+  '/contact': typeof ContactRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/help': typeof HelpRoute
+  '/investing': typeof InvestingRoute
+  '/login': typeof LoginRoute
+  '/personal': typeof PersonalRoute
+  '/register': typeof RegisterRoute
+  '/rewards-overview': typeof RewardsOverviewRoute
+  '/savings': typeof SavingsRoute
+  '/security-overview': typeof SecurityOverviewRoute
+  '/legal/disclosures': typeof LegalDisclosuresRoute
+  '/legal/electronic-communications': typeof LegalElectronicCommunicationsRoute
+  '/legal/investment-risk': typeof LegalInvestmentRiskRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/rewards-terms': typeof LegalRewardsTermsRoute
+  '/legal/terms': typeof LegalTermsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/business'
+    | '/cards-overview'
+    | '/careers'
+    | '/checking'
+    | '/contact'
+    | '/forgot-password'
+    | '/help'
+    | '/investing'
+    | '/login'
+    | '/personal'
+    | '/register'
+    | '/rewards-overview'
+    | '/savings'
+    | '/security-overview'
+    | '/legal/disclosures'
+    | '/legal/electronic-communications'
+    | '/legal/investment-risk'
+    | '/legal/privacy'
+    | '/legal/rewards-terms'
+    | '/legal/terms'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/business'
+    | '/cards-overview'
+    | '/careers'
+    | '/checking'
+    | '/contact'
+    | '/forgot-password'
+    | '/help'
+    | '/investing'
+    | '/login'
+    | '/personal'
+    | '/register'
+    | '/rewards-overview'
+    | '/savings'
+    | '/security-overview'
+    | '/legal/disclosures'
+    | '/legal/electronic-communications'
+    | '/legal/investment-risk'
+    | '/legal/privacy'
+    | '/legal/rewards-terms'
+    | '/legal/terms'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/business'
+    | '/cards-overview'
+    | '/careers'
+    | '/checking'
+    | '/contact'
+    | '/forgot-password'
+    | '/help'
+    | '/investing'
+    | '/login'
+    | '/personal'
+    | '/register'
+    | '/rewards-overview'
+    | '/savings'
+    | '/security-overview'
+    | '/legal/disclosures'
+    | '/legal/electronic-communications'
+    | '/legal/investment-risk'
+    | '/legal/privacy'
+    | '/legal/rewards-terms'
+    | '/legal/terms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BusinessRoute: typeof BusinessRoute
+  CardsOverviewRoute: typeof CardsOverviewRoute
+  CareersRoute: typeof CareersRoute
+  CheckingRoute: typeof CheckingRoute
+  ContactRoute: typeof ContactRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  HelpRoute: typeof HelpRoute
+  InvestingRoute: typeof InvestingRoute
+  LoginRoute: typeof LoginRoute
+  PersonalRoute: typeof PersonalRoute
+  RegisterRoute: typeof RegisterRoute
+  RewardsOverviewRoute: typeof RewardsOverviewRoute
+  SavingsRoute: typeof SavingsRoute
+  SecurityOverviewRoute: typeof SecurityOverviewRoute
+  LegalDisclosuresRoute: typeof LegalDisclosuresRoute
+  LegalElectronicCommunicationsRoute: typeof LegalElectronicCommunicationsRoute
+  LegalInvestmentRiskRoute: typeof LegalInvestmentRiskRoute
+  LegalPrivacyRoute: typeof LegalPrivacyRoute
+  LegalRewardsTermsRoute: typeof LegalRewardsTermsRoute
+  LegalTermsRoute: typeof LegalTermsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +326,179 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/business': {
+      id: '/business'
+      path: '/business'
+      fullPath: '/business'
+      preLoaderRoute: typeof BusinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cards-overview': {
+      id: '/cards-overview'
+      path: '/cards-overview'
+      fullPath: '/cards-overview'
+      preLoaderRoute: typeof CardsOverviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checking': {
+      id: '/checking'
+      path: '/checking'
+      fullPath: '/checking'
+      preLoaderRoute: typeof CheckingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/investing': {
+      id: '/investing'
+      path: '/investing'
+      fullPath: '/investing'
+      preLoaderRoute: typeof InvestingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/personal': {
+      id: '/personal'
+      path: '/personal'
+      fullPath: '/personal'
+      preLoaderRoute: typeof PersonalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rewards-overview': {
+      id: '/rewards-overview'
+      path: '/rewards-overview'
+      fullPath: '/rewards-overview'
+      preLoaderRoute: typeof RewardsOverviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/savings': {
+      id: '/savings'
+      path: '/savings'
+      fullPath: '/savings'
+      preLoaderRoute: typeof SavingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security-overview': {
+      id: '/security-overview'
+      path: '/security-overview'
+      fullPath: '/security-overview'
+      preLoaderRoute: typeof SecurityOverviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/disclosures': {
+      id: '/legal/disclosures'
+      path: '/legal/disclosures'
+      fullPath: '/legal/disclosures'
+      preLoaderRoute: typeof LegalDisclosuresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/electronic-communications': {
+      id: '/legal/electronic-communications'
+      path: '/legal/electronic-communications'
+      fullPath: '/legal/electronic-communications'
+      preLoaderRoute: typeof LegalElectronicCommunicationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/investment-risk': {
+      id: '/legal/investment-risk'
+      path: '/legal/investment-risk'
+      fullPath: '/legal/investment-risk'
+      preLoaderRoute: typeof LegalInvestmentRiskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/privacy': {
+      id: '/legal/privacy'
+      path: '/legal/privacy'
+      fullPath: '/legal/privacy'
+      preLoaderRoute: typeof LegalPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/rewards-terms': {
+      id: '/legal/rewards-terms'
+      path: '/legal/rewards-terms'
+      fullPath: '/legal/rewards-terms'
+      preLoaderRoute: typeof LegalRewardsTermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/terms': {
+      id: '/legal/terms'
+      path: '/legal/terms'
+      fullPath: '/legal/terms'
+      preLoaderRoute: typeof LegalTermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BusinessRoute: BusinessRoute,
+  CardsOverviewRoute: CardsOverviewRoute,
+  CareersRoute: CareersRoute,
+  CheckingRoute: CheckingRoute,
+  ContactRoute: ContactRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  HelpRoute: HelpRoute,
+  InvestingRoute: InvestingRoute,
+  LoginRoute: LoginRoute,
+  PersonalRoute: PersonalRoute,
+  RegisterRoute: RegisterRoute,
+  RewardsOverviewRoute: RewardsOverviewRoute,
+  SavingsRoute: SavingsRoute,
+  SecurityOverviewRoute: SecurityOverviewRoute,
+  LegalDisclosuresRoute: LegalDisclosuresRoute,
+  LegalElectronicCommunicationsRoute: LegalElectronicCommunicationsRoute,
+  LegalInvestmentRiskRoute: LegalInvestmentRiskRoute,
+  LegalPrivacyRoute: LegalPrivacyRoute,
+  LegalRewardsTermsRoute: LegalRewardsTermsRoute,
+  LegalTermsRoute: LegalTermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
