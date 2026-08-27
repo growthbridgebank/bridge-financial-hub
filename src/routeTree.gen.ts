@@ -22,6 +22,7 @@ import { Route as InvestingRouteImport } from './routes/investing'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PersonalRouteImport } from './routes/personal'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RewardsOverviewRouteImport } from './routes/rewards-overview'
 import { Route as SavingsRouteImport } from './routes/savings'
 import { Route as SecurityOverviewRouteImport } from './routes/security-overview'
@@ -97,6 +98,11 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RewardsOverviewRoute = RewardsOverviewRouteImport.update({
   id: '/rewards-overview',
   path: '/rewards-overview',
@@ -158,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/personal': typeof PersonalRoute
   '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/rewards-overview': typeof RewardsOverviewRoute
   '/savings': typeof SavingsRoute
   '/security-overview': typeof SecurityOverviewRoute
@@ -182,6 +189,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/personal': typeof PersonalRoute
   '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/rewards-overview': typeof RewardsOverviewRoute
   '/savings': typeof SavingsRoute
   '/security-overview': typeof SecurityOverviewRoute
@@ -207,6 +215,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/personal': typeof PersonalRoute
   '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/rewards-overview': typeof RewardsOverviewRoute
   '/savings': typeof SavingsRoute
   '/security-overview': typeof SecurityOverviewRoute
@@ -233,6 +242,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/personal'
     | '/register'
+    | '/reset-password'
     | '/rewards-overview'
     | '/savings'
     | '/security-overview'
@@ -257,6 +267,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/personal'
     | '/register'
+    | '/reset-password'
     | '/rewards-overview'
     | '/savings'
     | '/security-overview'
@@ -281,6 +292,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/personal'
     | '/register'
+    | '/reset-password'
     | '/rewards-overview'
     | '/savings'
     | '/security-overview'
@@ -306,6 +318,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   PersonalRoute: typeof PersonalRoute
   RegisterRoute: typeof RegisterRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   RewardsOverviewRoute: typeof RewardsOverviewRoute
   SavingsRoute: typeof SavingsRoute
   SecurityOverviewRoute: typeof SecurityOverviewRoute
@@ -410,6 +423,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/rewards-overview': {
       id: '/rewards-overview'
       path: '/rewards-overview'
@@ -490,6 +510,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   PersonalRoute: PersonalRoute,
   RegisterRoute: RegisterRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   RewardsOverviewRoute: RewardsOverviewRoute,
   SavingsRoute: SavingsRoute,
   SecurityOverviewRoute: SecurityOverviewRoute,
