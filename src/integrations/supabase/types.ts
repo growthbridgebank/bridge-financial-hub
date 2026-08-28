@@ -513,6 +513,65 @@ export type Database = {
           },
         ]
       }
+      loans: {
+        Row: {
+          account_id: string | null
+          amount_cents: number
+          created_at: string
+          decided_at: string | null
+          decided_by: string | null
+          decision_reason: string | null
+          id: string
+          interest_rate: number
+          purpose: string
+          reference: string
+          status: Database["public"]["Enums"]["loan_status"]
+          term_months: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_id?: string | null
+          amount_cents: number
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          decision_reason?: string | null
+          id?: string
+          interest_rate?: number
+          purpose: string
+          reference?: string
+          status?: Database["public"]["Enums"]["loan_status"]
+          term_months?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_id?: string | null
+          amount_cents?: number
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          decision_reason?: string | null
+          id?: string
+          interest_rate?: number
+          purpose?: string
+          reference?: string
+          status?: Database["public"]["Enums"]["loan_status"]
+          term_months?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "loans_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       login_sessions: {
         Row: {
           device_id: string | null
@@ -591,6 +650,9 @@ export type Database = {
           email: string
           first_name: string
           id: string
+          kyc_note: string | null
+          kyc_reviewed_at: string | null
+          kyc_reviewed_by: string | null
           kyc_status: Database["public"]["Enums"]["kyc_status"]
           last_name: string
           phone: string | null
@@ -611,6 +673,9 @@ export type Database = {
           email?: string
           first_name?: string
           id: string
+          kyc_note?: string | null
+          kyc_reviewed_at?: string | null
+          kyc_reviewed_by?: string | null
           kyc_status?: Database["public"]["Enums"]["kyc_status"]
           last_name?: string
           phone?: string | null
@@ -631,6 +696,9 @@ export type Database = {
           email?: string
           first_name?: string
           id?: string
+          kyc_note?: string | null
+          kyc_reviewed_at?: string | null
+          kyc_reviewed_by?: string | null
           kyc_status?: Database["public"]["Enums"]["kyc_status"]
           last_name?: string
           phone?: string | null
@@ -1026,6 +1094,47 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_review_kyc: {
+        Args: {
+          _decision: Database["public"]["Enums"]["kyc_status"]
+          _reason?: string
+          _user_id: string
+        }
+        Returns: undefined
+      }
+      admin_review_loan: {
+        Args: {
+          _loan_id: string
+          _reason?: string
+          _status: Database["public"]["Enums"]["loan_status"]
+        }
+        Returns: undefined
+      }
+      admin_review_transaction: {
+        Args: { _approve: boolean; _reason?: string; _txn_id: string }
+        Returns: undefined
+      }
+      admin_review_transfer: {
+        Args: { _approve: boolean; _reason?: string; _transfer_id: string }
+        Returns: undefined
+      }
+      admin_set_account_status: {
+        Args: {
+          _account_id: string
+          _reason?: string
+          _status: Database["public"]["Enums"]["account_status"]
+        }
+        Returns: undefined
+      }
+      admin_set_profile_status: {
+        Args: {
+          _reason?: string
+          _status: Database["public"]["Enums"]["account_status"]
+          _user_id: string
+        }
+        Returns: undefined
+      }
+      can_admin_act: { Args: { _user_id: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -1034,6 +1143,18 @@ export type Database = {
         Returns: boolean
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      write_audit: {
+        Args: {
+          _action: string
+          _entity: string
+          _entity_id: string
+          _new: Json
+          _prev: Json
+          _reason: string
+          _target_user: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       account_status:
@@ -1071,6 +1192,14 @@ export type Database = {
         | "in_review"
         | "verified"
         | "rejected"
+      loan_status:
+        | "pending"
+        | "under_review"
+        | "approved"
+        | "rejected"
+        | "disbursed"
+        | "repaying"
+        | "closed"
       notification_category:
         | "login"
         | "security"
@@ -1309,6 +1438,15 @@ export const Constants = {
         "in_review",
         "verified",
         "rejected",
+      ],
+      loan_status: [
+        "pending",
+        "under_review",
+        "approved",
+        "rejected",
+        "disbursed",
+        "repaying",
+        "closed",
       ],
       notification_category: [
         "login",
