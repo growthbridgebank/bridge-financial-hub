@@ -1,0 +1,23 @@
+REVOKE ALL ON FUNCTION public.can_admin_act(uuid) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.write_audit(text, uuid, text, uuid, jsonb, jsonb, text) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.admin_review_kyc(uuid, public.kyc_status, text) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.admin_set_profile_status(uuid, public.account_status, text) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.admin_set_account_status(uuid, public.account_status, text) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.admin_review_transaction(uuid, boolean, text) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.admin_review_transfer(uuid, boolean, text) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.admin_review_loan(uuid, public.loan_status, text) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.has_role(uuid, public.app_role) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.is_staff(uuid) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.handle_new_user() FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.set_updated_at() FROM PUBLIC, anon;
+
+GRANT EXECUTE ON FUNCTION public.can_admin_act(uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.has_role(uuid, public.app_role) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.is_staff(uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_review_kyc(uuid, public.kyc_status, text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_set_profile_status(uuid, public.account_status, text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_set_account_status(uuid, public.account_status, text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_review_transaction(uuid, boolean, text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_review_transfer(uuid, boolean, text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_review_loan(uuid, public.loan_status, text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.set_updated_at() TO authenticated, service_role;
