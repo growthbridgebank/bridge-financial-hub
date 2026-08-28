@@ -63,12 +63,7 @@ export function FeatureGrid({
 
 export function ProviderNotice({ provider }: { provider: string }) {
   return (
-    <div className="mx-auto w-full max-w-4xl px-4 pb-14 sm:px-6">
-      <p className="rounded-lg border border-gold/40 bg-gold/10 p-4 text-sm text-foreground">
-        <strong className="font-semibold">Provider required.</strong> {provider} functionality becomes available only
-        after GrowthBridge Bank connects the corresponding regulated provider. Until then, no balances, transactions, or
-        approvals are represented as real.
-      </>
+    <></>
     </div>
   );
 }
