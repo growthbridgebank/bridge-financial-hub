@@ -68,7 +68,7 @@ export function ProviderNotice({ provider }: { provider: string }) {
         <strong className="font-semibold">Provider required.</strong> {provider} functionality becomes available only
         after GrowthBridge Bank connects the corresponding regulated provider. Until then, no balances, transactions, or
         approvals are represented as real.
-      </p>
+      </>
     </div>
   );
 }
