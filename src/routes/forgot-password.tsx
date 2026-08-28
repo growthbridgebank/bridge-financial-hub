@@ -6,35 +6,88 @@ import { AuthShell } from "@/components/marketing/AuthShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/forgot-password")({
   head: () => ({
     meta: [
       { title: "Reset Password | GrowthBridge Bank" },
-      { name: "description", content: "Request a secure password reset link for your GrowthBridge Bank account." },
-      { property: "og:title", content: "Reset Password | GrowthBridge Bank" },
-      { property: "og:description", content: "Request a secure password reset link for your GBB account." },
+      {
+        name: "description",
+        content:
+          "Request a secure password reset link for your GrowthBridge Bank account.",
+      },
+      {
+        property: "og:title",
+        content: "Reset Password | GrowthBridge Bank",
+      },
+      {
+        property: "og:description",
+        content:
+          "Request a secure password reset link for your GBB account.",
+      },
+      { name: "robots", content: "noindex" },
     ],
   }),
   component: ForgotPasswordPage,
 });
 
-const schema = z.object({ email: z.string().trim().email("Enter a valid email address").max(255) });
+const schema = z.object({
+  email: z
+    .string()
+    .trim()
+    .email("Enter a valid email address")
+    .max(255),
+});
 
 function ForgotPasswordPage() {
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [sent, setSent] = useState(false);
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(
+    event: React.FormEvent<HTMLFormElement>,
+  ) {
     event.preventDefault();
-    const email = String(new FormData(event.currentTarget).get("email") ?? "");
-    const result = schema.safeParse({ email });
+
+    const form = new FormData(event.currentTarget);
+
+    const result = schema.safeParse({
+      email: String(form.get("email") ?? ""),
+    });
+
     if (!result.success) {
-      setError(result.error.issues[0]?.message ?? "Invalid email");
+      setError(
+        result.error.issues[0]?.message ?? "Invalid email address",
+      );
       return;
     }
+
     setError("");
-    toast.error("Email provider not connected", {
-      description: "Password reset emails send once the authentication and email providers are configured.",
+    setSubmitting(true);
+
+    const { error: resetError } =
+      await supabase.auth.resetPasswordForEmail(
+        result.data.email,
+        {
+          redirectTo: `${window.location.origin}/reset-password`,
+        },
+      );
+
+    setSubmitting(false);
+
+    if (resetError) {
+      toast.error("Could not send reset link", {
+        description: resetError.message,
+      });
+      return;
+    }
+
+    setSent(true);
+
+    toast.success("Reset link sent", {
+      description:
+        "Check your email for instructions to create a new password.",
     });
   }
 
@@ -43,21 +96,74 @@ function ForgotPasswordPage() {
       title="Reset your password"
       subtitle="We'll email a secure, time-limited reset link to the address on your account."
       footer={
-        <Link to="/login" className="font-medium text-foreground underline underline-offset-4">
+        <Link
+          to="/login"
+          className="font-medium text-foreground underline underline-offset-4"
+        >
           Back to sign in
         </Link>
       }
     >
-      <form onSubmit={onSubmit} className="space-y-5" noValidate>
-        <div className="space-y-2">
-          <Label htmlFor="email">Email address</Label>
-          <Input id="email" name="email" type="email" autoComplete="email" aria-invalid={!!error} />
-          {error && <p className="text-sm text-destructive">{error}</p>}
+      {sent ? (
+        <div className="space-y-6 text-center">
+          <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-secondary">
+            <span className="text-2xl">✓</span>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">
+              Check your email
+            </h2>
+
+            <p className="mt-2 text-sm text-muted-foreground">
+              If an account exists for that email address, we've
+              sent a password reset link.
+            </p>
+          </div>
+
+          <Button
+            type="button"
+            className="w-full"
+            onClick={() => setSent(false)}
+          >
+            Send another link
+          </Button>
         </div>
-        <Button type="submit" className="w-full">
-          Send reset link
-        </Button>
-      </form>
+      ) : (
+        <form
+          onSubmit={onSubmit}
+          className="space-y-5"
+          noValidate
+        >
+          <div className="space-y-2">
+            <Label htmlFor="email">Email address</Label>
+
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              aria-invalid={!!error}
+              disabled={submitting}
+            />
+
+            {error && (
+              <p className="text-sm text-destructive">
+                {error}
+              </p>
+            )}
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={submitting}
+          >
+            {submitting ? "Sending…" : "Send reset link"}
+          </Button>
+        </form>
+      )}
     </AuthShell>
   );
 }
