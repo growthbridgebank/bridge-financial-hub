@@ -47,7 +47,7 @@ export const getAdminOverview = createServerFn({ method: "GET" })
         count("profiles", (q) => q.in("kyc_status", ["pending", "in_review", "unverified"])),
         count("accounts"),
         count("transactions", (q) => q.eq("direction", "credit").in("status", ["pending", "processing"])),
-        count("transactions", (q) => q.eq("direction", "debit").in("status", ["pending", "processing"])),
+        count("transactions", (q) => q.eq("type", "deposit").in("status", ["pending", "processing"])),
         count("transfers", (q) => q.in("status", ["pending", "processing"])),
         count("loans", (q) => q.in("status", ["pending", "under_review"])),
       ]);
