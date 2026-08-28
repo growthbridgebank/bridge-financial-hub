@@ -13,8 +13,8 @@ import {
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -22,7 +22,8 @@ export const Route = createFileRoute("/dashboard")({
       { title: "Dashboard | GrowthBridge Bank" },
       {
         name: "description",
-        content: "View your GrowthBridge Bank accounts, balances, cards, investments, and recent activity.",
+        content:
+          "View your GrowthBridge Bank accounts, balances, cards, investments, and recent activity.",
       },
     ],
   }),
@@ -171,6 +172,7 @@ function DashboardPage() {
     }
 
     toast.success("You have been signed out.");
+
     await navigate({ to: "/login" });
   }
 
@@ -186,6 +188,7 @@ function DashboardPage() {
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="text-center">
           <div className="mx-auto mb-4 size-10 animate-spin rounded-full border-4 border-muted border-t-primary" />
+
           <p className="text-sm text-muted-foreground">
             Loading your dashboard...
           </p>
@@ -196,7 +199,6 @@ function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
           <Link to="/" className="flex items-center gap-2">
@@ -208,6 +210,7 @@ function DashboardPage() {
               <p className="font-display text-lg font-bold">
                 GrowthBridge
               </p>
+
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
                 Bank
               </p>
@@ -223,7 +226,9 @@ function DashboardPage() {
               aria-label="Refresh dashboard"
             >
               <RefreshCw
-                className={`size-4 ${refreshing ? "animate-spin" : ""}`}
+                className={`size-4 ${
+                  refreshing ? "animate-spin" : ""
+                }`}
               />
             </Button>
 
@@ -240,7 +245,6 @@ function DashboardPage() {
       </header>
 
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:py-10">
-        {/* Welcome */}
         <div className="mb-8">
           <p className="text-sm text-muted-foreground">
             Welcome back
@@ -255,7 +259,6 @@ function DashboardPage() {
           </p>
         </div>
 
-        {/* Security / KYC status */}
         <div className="mb-8 flex flex-col gap-4 rounded-xl border border-border bg-card p-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-3">
             <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-secondary">
@@ -263,7 +266,10 @@ function DashboardPage() {
             </div>
 
             <div>
-              <h2 className="font-semibold">Account security</h2>
+              <h2 className="font-semibold">
+                Account security
+              </h2>
+
               <p className="mt-1 text-sm text-muted-foreground">
                 KYC status:{" "}
                 <span className="font-medium capitalize text-foreground">
@@ -281,7 +287,6 @@ function DashboardPage() {
           </Link>
         </div>
 
-        {/* Total balance */}
         <section className="mb-8">
           <div className="rounded-2xl bg-primary p-6 text-primary-foreground shadow-elevated sm:p-8">
             <p className="text-sm text-primary-foreground/70">
@@ -298,7 +303,6 @@ function DashboardPage() {
           </div>
         </section>
 
-        {/* Quick actions */}
         <section className="mb-10">
           <h2 className="mb-4 text-lg font-semibold">
             Quick actions
@@ -310,10 +314,15 @@ function DashboardPage() {
               className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
             >
               <Wallet className="size-6 text-primary" />
-              <h3 className="mt-4 font-semibold">Checking</h3>
+
+              <h3 className="mt-4 font-semibold">
+                Checking
+              </h3>
+
               <p className="mt-1 text-sm text-muted-foreground">
                 View your everyday account.
               </p>
+
               <ArrowRight className="mt-4 size-4 transition-transform group-hover:translate-x-1" />
             </Link>
 
@@ -322,10 +331,15 @@ function DashboardPage() {
               className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
             >
               <PiggyBank className="size-6 text-primary" />
-              <h3 className="mt-4 font-semibold">Savings</h3>
+
+              <h3 className="mt-4 font-semibold">
+                Savings
+              </h3>
+
               <p className="mt-1 text-sm text-muted-foreground">
                 Build your savings goals.
               </p>
+
               <ArrowRight className="mt-4 size-4 transition-transform group-hover:translate-x-1" />
             </Link>
 
@@ -334,10 +348,15 @@ function DashboardPage() {
               className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
             >
               <TrendingUp className="size-6 text-primary" />
-              <h3 className="mt-4 font-semibold">Investments</h3>
+
+              <h3 className="mt-4 font-semibold">
+                Investments
+              </h3>
+
               <p className="mt-1 text-sm text-muted-foreground">
                 Track your investment portfolio.
               </p>
+
               <ArrowRight className="mt-4 size-4 transition-transform group-hover:translate-x-1" />
             </Link>
 
@@ -346,16 +365,20 @@ function DashboardPage() {
               className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
             >
               <CreditCard className="size-6 text-primary" />
-              <h3 className="mt-4 font-semibold">Cards</h3>
+
+              <h3 className="mt-4 font-semibold">
+                Cards
+              </h3>
+
               <p className="mt-1 text-sm text-muted-foreground">
                 Manage your GBB cards.
               </p>
+
               <ArrowRight className="mt-4 size-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </section>
 
-        {/* Accounts */}
         <section className="mb-10">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-lg font-semibold">
@@ -425,7 +448,6 @@ function DashboardPage() {
           )}
         </section>
 
-        {/* Recent transactions */}
         <section>
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-lg font-semibold">
@@ -488,4 +510,4 @@ function DashboardPage() {
       </main>
     </div>
   );
-    }
+              }
