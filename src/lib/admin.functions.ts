@@ -54,7 +54,7 @@ export const getAdminOverview = createServerFn({ method: "GET" })
 
     const { data: recentTxns } = await ctx.supabase
       .from("transactions")
-      .select("id, user_id, description, type, direction, amount_cents, status, posted_at")
+      .select("id, user_id, description, type, direction, amount, status, created_at")
       .order("created_at", { ascending: false })
       .limit(8);
     const { data: recentActions } = await ctx.supabase
