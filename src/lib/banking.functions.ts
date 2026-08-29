@@ -753,4 +753,8 @@ export const getMyTickets = createServerFn({
         .eq("user_id", context.userId)
         .order("created_at", { ascending: false });
 
-    if (error) thr
+    if (error) throw new Error(error.message);
+
+    return data ?? [];
+  });
+
