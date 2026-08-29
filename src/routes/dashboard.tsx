@@ -52,8 +52,8 @@ type Transaction = {
   id: string;
   amount_cents: number;
   description: string | null;
-  merchant_name: string | null;
-  occurred_at: string;
+  merchant: string | null;
+  posted_at: string;
   status: string;
 };
 
@@ -120,10 +120,10 @@ function DashboardPage() {
           supabase
             .from("transactions")
             .select(
-              "id,amount_cents,description,merchant_name,occurred_at,status",
+              "id,amount_cents,description,merchant,posted_at,status",
             )
             .eq("user_id", user.id)
-            .order("occurred_at", { ascending: false })
+            .order("posted_at", { ascending: false })
             .limit(5),
         ]);
 
@@ -478,13 +478,13 @@ function DashboardPage() {
                   >
                     <div className="min-w-0">
                       <p className="truncate font-medium">
-                        {transaction.merchant_name ||
+                        {transaction.merchant ||
                           transaction.description ||
                           "Transaction"}
                       </p>
 
                       <p className="mt-1 text-xs text-muted-foreground">
-                        {formatDate(transaction.occurred_at)} ·{" "}
+                        {formatDate(transaction.posted_at)} ·{" "}
                         <span className="capitalize">
                           {transaction.status}
                         </span>
