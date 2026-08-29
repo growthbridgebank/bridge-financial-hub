@@ -207,13 +207,13 @@ function ResetPasswordPage() {
             name="password"
             type="password"
             autoComplete="new-password"
-            aria-invalid={!!errors.password}
+            aria-invalid={!!errors["password"]}
             disabled={submitting}
           />
 
-          {errors.password && (
+          {errors["password"] && (
             <p className="text-sm text-destructive">
-              {errors.password}
+              {errors["password"]}
             </p>
           )}
         </div>
@@ -228,13 +228,13 @@ function ResetPasswordPage() {
             name="confirmPassword"
             type="password"
             autoComplete="new-password"
-            aria-invalid={!!errors.confirmPassword}
+            aria-invalid={!!errors["confirmPassword"]}
             disabled={submitting}
           />
 
-          {errors.confirmPassword && (
+          {errors["confirmPassword"] && (
             <p className="text-sm text-destructive">
-              {errors.confirmPassword}
+              {errors["confirmPassword"]}
             </p>
           )}
         </div>

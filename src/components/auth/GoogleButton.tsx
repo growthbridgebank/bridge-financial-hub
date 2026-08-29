@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable/index";
 
 export function GoogleButton({
   label = "Continue with Google",
@@ -9,29 +10,32 @@ export function GoogleButton({
   label?: string;
 }) {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function signIn() {
     setLoading(true);
 
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/dashboard`,
-      },
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
     });
 
-    if (error) {
+    if (result.error) {
       setLoading(false);
-
       toast.error("Google sign-in failed", {
-        description: error.message,
+        description:
+          result.error instanceof Error
+            ? result.error.message
+            : String(result.error),
       });
-
       return;
     }
 
-    // Supabase will redirect the browser to Google.
+    if (result.redirected) return;
+
+    setLoading(false);
+    void navigate({ to: "/dashboard" });
   }
+
 
   return (
     <Button

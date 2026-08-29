@@ -11,8 +11,9 @@ export function AuthShell({
   title: string;
   subtitle: string;
   children: ReactNode;
-  footer: ReactNode;
+  footer?: ReactNode;
 }) {
+
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
       <div className="hidden flex-col justify-between bg-gradient-navy p-10 text-primary-foreground lg:flex">
