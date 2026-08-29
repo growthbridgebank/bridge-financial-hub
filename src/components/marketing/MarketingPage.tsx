@@ -71,3 +71,20 @@ export function FeatureGrid({
     </section>
   );
 }
+
+export function ProviderNotice({
+  title = "Connected provider required",
+  description = "GrowthBridge Bank is a financial technology platform, not a chartered bank. Live balances, payments, and investing require a connected regulated partner institution.",
+}: {
+  title?: string;
+  description?: string;
+}) {
+  return (
+    <section className="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
+      <div className="rounded-xl border border-border bg-secondary/40 p-6">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-foreground">{title}</h2>
+        <p className="mt-2 text-sm text-muted-foreground">{description}</p>
+      </div>
+    </section>
+  );
+}
