@@ -24,10 +24,6 @@ export function AuthShell({
             Bank, save, invest, and manage your money with a modern financial platform designed around your goals.
           </p>
         </div>
-        <p className="max-w-md text-xs text-primary-foreground/55">
-          GrowthBridge Bank is a financial technology platform, not a chartered bank. Regulated services are provided by
-          connected partner institutions.
-        </p>
       </div>
 
       <main className="flex flex-col justify-center bg-background px-4 py-12 sm:px-8">
