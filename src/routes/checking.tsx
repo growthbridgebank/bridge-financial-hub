@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FeatureGrid, MarketingShell, PageHero, ProviderNotice } from "@/components/marketing/MarketingPage";
+import { FeatureGrid, MarketingShell, PageHero } from "@/components/marketing/MarketingPage";
 
 export const Route = createFileRoute("/checking")({
   head: () => ({
@@ -37,7 +37,7 @@ function CheckingPage() {
           { title: "Insights", description: "Automatic categorization of eligible transactions." },
         ]}
       />
-      <ProviderNotice provider="Deposit account, ACH, and bill payment" />
+      
     </MarketingShell>
   );
 }

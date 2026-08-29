@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FeatureGrid, MarketingShell, PageHero, ProviderNotice } from "@/components/marketing/MarketingPage";
+import { FeatureGrid, MarketingShell, PageHero } from "@/components/marketing/MarketingPage";
 
 export const Route = createFileRoute("/cards-overview")({
   head: () => ({
@@ -34,7 +34,7 @@ function CardsOverview() {
           { title: "Rewards linked", description: "Eligible purchases feed your rewards ledger." },
         ]}
       />
-      <ProviderNotice provider="Card issuing and transaction processing" />
+      
     </MarketingShell>
   );
 }

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FeatureGrid, MarketingShell, PageHero, ProviderNotice } from "@/components/marketing/MarketingPage";
+import { FeatureGrid, MarketingShell, PageHero } from "@/components/marketing/MarketingPage";
 
 export const Route = createFileRoute("/investing")({
   head: () => ({
@@ -44,7 +44,7 @@ function InvestingPage() {
           results. GrowthBridge Bank is not a broker-dealer, investment adviser, SEC registrant, or FINRA member.
         </p>
       </div>
-      <ProviderNotice provider="Brokerage and custody" />
+      
     </MarketingShell>
   );
 }
