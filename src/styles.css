@@ -63,6 +63,10 @@
   --color-gold-foreground: var(--gold-foreground);
   --color-navy: var(--navy);
   --color-navy-deep: var(--navy-deep);
+  --color-emerald: var(--emerald);
+  --color-emerald-deep: var(--emerald-deep);
+  --color-emerald-soft: var(--emerald-soft);
+  --color-emerald-foreground: var(--emerald-foreground);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
@@ -100,6 +104,11 @@
   --ring: oklch(0.76 0.13 82);
   --gold: oklch(0.76 0.13 82);
   --gold-foreground: oklch(0.24 0.05 259);
+  --emerald: oklch(0.55 0.14 158);
+  --emerald-deep: oklch(0.42 0.12 160);
+  --emerald-soft: oklch(0.95 0.03 158);
+  --emerald-foreground: oklch(0.99 0.01 158);
+  --gradient-emerald: linear-gradient(145deg, oklch(0.58 0.14 158), oklch(0.38 0.11 162));
   --navy: oklch(0.31 0.072 262);
   --navy-deep: oklch(0.22 0.06 262);
   --gradient-navy: linear-gradient(150deg, oklch(0.28 0.07 262), oklch(0.19 0.055 262));
