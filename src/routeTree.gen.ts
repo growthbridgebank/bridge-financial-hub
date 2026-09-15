@@ -12,15 +12,19 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BusinessRouteImport } from './routes/business'
+import { Route as CardsRouteImport } from './routes/cards'
 import { Route as CardsOverviewRouteImport } from './routes/cards-overview'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as CheckingRouteImport } from './routes/checking'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as FinanceRouteImport } from './routes/finance'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as InvestingRouteImport } from './routes/investing'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as MeRouteImport } from './routes/me'
+import { Route as PaymentsRouteImport } from './routes/payments'
 import { Route as PersonalRouteImport } from './routes/personal'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
@@ -49,6 +53,11 @@ const BusinessRoute = BusinessRouteImport.update({
   path: '/business',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CardsRoute = CardsRouteImport.update({
+  id: '/cards',
+  path: '/cards',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CardsOverviewRoute = CardsOverviewRouteImport.update({
   id: '/cards-overview',
   path: '/cards-overview',
@@ -74,6 +83,11 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FinanceRoute = FinanceRouteImport.update({
+  id: '/finance',
+  path: '/finance',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
@@ -92,6 +106,16 @@ const InvestingRoute = InvestingRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeRoute = MeRouteImport.update({
+  id: '/me',
+  path: '/me',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentsRoute = PaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PersonalRoute = PersonalRouteImport.update({
@@ -160,15 +184,19 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/business': typeof BusinessRoute
+  '/cards': typeof CardsRoute
   '/cards-overview': typeof CardsOverviewRoute
   '/careers': typeof CareersRoute
   '/checking': typeof CheckingRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
+  '/finance': typeof FinanceRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
   '/login': typeof LoginRoute
+  '/me': typeof MeRoute
+  '/payments': typeof PaymentsRoute
   '/personal': typeof PersonalRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -186,15 +214,19 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/business': typeof BusinessRoute
+  '/cards': typeof CardsRoute
   '/cards-overview': typeof CardsOverviewRoute
   '/careers': typeof CareersRoute
   '/checking': typeof CheckingRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
+  '/finance': typeof FinanceRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
   '/login': typeof LoginRoute
+  '/me': typeof MeRoute
+  '/payments': typeof PaymentsRoute
   '/personal': typeof PersonalRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -213,15 +245,19 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/business': typeof BusinessRoute
+  '/cards': typeof CardsRoute
   '/cards-overview': typeof CardsOverviewRoute
   '/careers': typeof CareersRoute
   '/checking': typeof CheckingRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
+  '/finance': typeof FinanceRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
   '/login': typeof LoginRoute
+  '/me': typeof MeRoute
+  '/payments': typeof PaymentsRoute
   '/personal': typeof PersonalRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -241,15 +277,19 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/business'
+    | '/cards'
     | '/cards-overview'
     | '/careers'
     | '/checking'
     | '/contact'
     | '/dashboard'
+    | '/finance'
     | '/forgot-password'
     | '/help'
     | '/investing'
     | '/login'
+    | '/me'
+    | '/payments'
     | '/personal'
     | '/register'
     | '/reset-password'
@@ -267,15 +307,19 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/business'
+    | '/cards'
     | '/cards-overview'
     | '/careers'
     | '/checking'
     | '/contact'
     | '/dashboard'
+    | '/finance'
     | '/forgot-password'
     | '/help'
     | '/investing'
     | '/login'
+    | '/me'
+    | '/payments'
     | '/personal'
     | '/register'
     | '/reset-password'
@@ -293,15 +337,19 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/business'
+    | '/cards'
     | '/cards-overview'
     | '/careers'
     | '/checking'
     | '/contact'
     | '/dashboard'
+    | '/finance'
     | '/forgot-password'
     | '/help'
     | '/investing'
     | '/login'
+    | '/me'
+    | '/payments'
     | '/personal'
     | '/register'
     | '/reset-password'
@@ -320,15 +368,19 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   BusinessRoute: typeof BusinessRoute
+  CardsRoute: typeof CardsRoute
   CardsOverviewRoute: typeof CardsOverviewRoute
   CareersRoute: typeof CareersRoute
   CheckingRoute: typeof CheckingRoute
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRoute
+  FinanceRoute: typeof FinanceRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   HelpRoute: typeof HelpRoute
   InvestingRoute: typeof InvestingRoute
   LoginRoute: typeof LoginRoute
+  MeRoute: typeof MeRoute
+  PaymentsRoute: typeof PaymentsRoute
   PersonalRoute: typeof PersonalRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -366,6 +418,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BusinessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cards': {
+      id: '/cards'
+      path: '/cards'
+      fullPath: '/cards'
+      preLoaderRoute: typeof CardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cards-overview': {
       id: '/cards-overview'
       path: '/cards-overview'
@@ -401,6 +460,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/finance': {
+      id: '/finance'
+      path: '/finance'
+      fullPath: '/finance'
+      preLoaderRoute: typeof FinanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/forgot-password': {
       id: '/forgot-password'
       path: '/forgot-password'
@@ -427,6 +493,20 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/me': {
+      id: '/me'
+      path: '/me'
+      fullPath: '/me'
+      preLoaderRoute: typeof MeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payments': {
+      id: '/payments'
+      path: '/payments'
+      fullPath: '/payments'
+      preLoaderRoute: typeof PaymentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/personal': {
@@ -520,15 +600,19 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BusinessRoute: BusinessRoute,
+  CardsRoute: CardsRoute,
   CardsOverviewRoute: CardsOverviewRoute,
   CareersRoute: CareersRoute,
   CheckingRoute: CheckingRoute,
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRoute,
+  FinanceRoute: FinanceRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   HelpRoute: HelpRoute,
   InvestingRoute: InvestingRoute,
   LoginRoute: LoginRoute,
+  MeRoute: MeRoute,
+  PaymentsRoute: PaymentsRoute,
   PersonalRoute: PersonalRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
