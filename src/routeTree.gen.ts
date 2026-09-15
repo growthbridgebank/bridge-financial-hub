@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BusinessRouteImport } from './routes/business'
+import { Route as CardsRouteImport } from './routes/cards'
 import { Route as CardsOverviewRouteImport } from './routes/cards-overview'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as CheckingRouteImport } from './routes/checking'
@@ -49,6 +50,11 @@ const AboutRoute = AboutRouteImport.update({
 const BusinessRoute = BusinessRouteImport.update({
   id: '/business',
   path: '/business',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CardsRoute = CardsRouteImport.update({
+  id: '/cards',
+  path: '/cards',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CardsOverviewRoute = CardsOverviewRouteImport.update({
@@ -172,6 +178,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/business': typeof BusinessRoute
+  '/cards': typeof CardsRoute
   '/cards-overview': typeof CardsOverviewRoute
   '/careers': typeof CareersRoute
   '/checking': typeof CheckingRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/business': typeof BusinessRoute
+  '/cards': typeof CardsRoute
   '/cards-overview': typeof CardsOverviewRoute
   '/careers': typeof CareersRoute
   '/checking': typeof CheckingRoute
@@ -229,6 +237,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/business': typeof BusinessRoute
+  '/cards': typeof CardsRoute
   '/cards-overview': typeof CardsOverviewRoute
   '/careers': typeof CareersRoute
   '/checking': typeof CheckingRoute
@@ -259,6 +268,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/business'
+    | '/cards'
     | '/cards-overview'
     | '/careers'
     | '/checking'
@@ -287,6 +297,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/business'
+    | '/cards'
     | '/cards-overview'
     | '/careers'
     | '/checking'
@@ -315,6 +326,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/business'
+    | '/cards'
     | '/cards-overview'
     | '/careers'
     | '/checking'
@@ -344,6 +356,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   BusinessRoute: typeof BusinessRoute
+  CardsRoute: typeof CardsRoute
   CardsOverviewRoute: typeof CardsOverviewRoute
   CareersRoute: typeof CareersRoute
   CheckingRoute: typeof CheckingRoute
@@ -390,6 +403,13 @@ declare module '@tanstack/react-router' {
       path: '/business'
       fullPath: '/business'
       preLoaderRoute: typeof BusinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cards': {
+      id: '/cards'
+      path: '/cards'
+      fullPath: '/cards'
+      preLoaderRoute: typeof CardsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cards-overview': {
@@ -560,6 +580,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BusinessRoute: BusinessRoute,
+  CardsRoute: CardsRoute,
   CardsOverviewRoute: CardsOverviewRoute,
   CareersRoute: CareersRoute,
   CheckingRoute: CheckingRoute,
