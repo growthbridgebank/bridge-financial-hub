@@ -17,6 +17,7 @@ import { Route as CareersRouteImport } from './routes/careers'
 import { Route as CheckingRouteImport } from './routes/checking'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as FinanceRouteImport } from './routes/finance'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as InvestingRouteImport } from './routes/investing'
@@ -73,6 +74,11 @@ const ContactRoute = ContactRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceRoute = FinanceRouteImport.update({
+  id: '/finance',
+  path: '/finance',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -171,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/checking': typeof CheckingRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
+  '/finance': typeof FinanceRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
@@ -198,6 +205,7 @@ export interface FileRoutesByTo {
   '/checking': typeof CheckingRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
+  '/finance': typeof FinanceRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
@@ -226,6 +234,7 @@ export interface FileRoutesById {
   '/checking': typeof CheckingRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
+  '/finance': typeof FinanceRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
@@ -255,6 +264,7 @@ export interface FileRouteTypes {
     | '/checking'
     | '/contact'
     | '/dashboard'
+    | '/finance'
     | '/forgot-password'
     | '/help'
     | '/investing'
@@ -282,6 +292,7 @@ export interface FileRouteTypes {
     | '/checking'
     | '/contact'
     | '/dashboard'
+    | '/finance'
     | '/forgot-password'
     | '/help'
     | '/investing'
@@ -309,6 +320,7 @@ export interface FileRouteTypes {
     | '/checking'
     | '/contact'
     | '/dashboard'
+    | '/finance'
     | '/forgot-password'
     | '/help'
     | '/investing'
@@ -337,6 +349,7 @@ export interface RootRouteChildren {
   CheckingRoute: typeof CheckingRoute
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRoute
+  FinanceRoute: typeof FinanceRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   HelpRoute: typeof HelpRoute
   InvestingRoute: typeof InvestingRoute
@@ -412,6 +425,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance': {
+      id: '/finance'
+      path: '/finance'
+      fullPath: '/finance'
+      preLoaderRoute: typeof FinanceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -545,6 +565,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckingRoute: CheckingRoute,
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRoute,
+  FinanceRoute: FinanceRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   HelpRoute: HelpRoute,
   InvestingRoute: InvestingRoute,
