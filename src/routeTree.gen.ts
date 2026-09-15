@@ -23,6 +23,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as InvestingRouteImport } from './routes/investing'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as MeRouteImport } from './routes/me'
 import { Route as PaymentsRouteImport } from './routes/payments'
 import { Route as PersonalRouteImport } from './routes/personal'
 import { Route as RegisterRouteImport } from './routes/register'
@@ -107,6 +108,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MeRoute = MeRouteImport.update({
+  id: '/me',
+  path: '/me',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PaymentsRoute = PaymentsRouteImport.update({
   id: '/payments',
   path: '/payments',
@@ -189,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
   '/login': typeof LoginRoute
+  '/me': typeof MeRoute
   '/payments': typeof PaymentsRoute
   '/personal': typeof PersonalRoute
   '/register': typeof RegisterRoute
@@ -218,6 +225,7 @@ export interface FileRoutesByTo {
   '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
   '/login': typeof LoginRoute
+  '/me': typeof MeRoute
   '/payments': typeof PaymentsRoute
   '/personal': typeof PersonalRoute
   '/register': typeof RegisterRoute
@@ -248,6 +256,7 @@ export interface FileRoutesById {
   '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
   '/login': typeof LoginRoute
+  '/me': typeof MeRoute
   '/payments': typeof PaymentsRoute
   '/personal': typeof PersonalRoute
   '/register': typeof RegisterRoute
@@ -279,6 +288,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/investing'
     | '/login'
+    | '/me'
     | '/payments'
     | '/personal'
     | '/register'
@@ -308,6 +318,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/investing'
     | '/login'
+    | '/me'
     | '/payments'
     | '/personal'
     | '/register'
@@ -337,6 +348,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/investing'
     | '/login'
+    | '/me'
     | '/payments'
     | '/personal'
     | '/register'
@@ -367,6 +379,7 @@ export interface RootRouteChildren {
   HelpRoute: typeof HelpRoute
   InvestingRoute: typeof InvestingRoute
   LoginRoute: typeof LoginRoute
+  MeRoute: typeof MeRoute
   PaymentsRoute: typeof PaymentsRoute
   PersonalRoute: typeof PersonalRoute
   RegisterRoute: typeof RegisterRoute
@@ -482,6 +495,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/me': {
+      id: '/me'
+      path: '/me'
+      fullPath: '/me'
+      preLoaderRoute: typeof MeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/payments': {
       id: '/payments'
       path: '/payments'
@@ -591,6 +611,7 @@ const rootRouteChildren: RootRouteChildren = {
   HelpRoute: HelpRoute,
   InvestingRoute: InvestingRoute,
   LoginRoute: LoginRoute,
+  MeRoute: MeRoute,
   PaymentsRoute: PaymentsRoute,
   PersonalRoute: PersonalRoute,
   RegisterRoute: RegisterRoute,
