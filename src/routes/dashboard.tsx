@@ -1,20 +1,49 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
+  ArrowDownToLine,
   ArrowRight,
+  ArrowUpRight,
+  Building2,
   CreditCard,
-  Landmark,
-  LogOut,
+  Eye,
+  EyeOff,
+  Gift,
+  LayoutGrid,
+  Lightbulb,
   PiggyBank,
-  RefreshCw,
-  ShieldCheck,
+  Plus,
+  Receipt,
+  Send,
+  Signal,
+  Smartphone,
   TrendingUp,
-  Wallet,
+  Wifi,
 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { useState } from "react";
 
+import { AppShell } from "@/components/dashboard/AppShell";
+import {
+  EmptyState,
+  ListSkeleton,
+  LoadError,
+  Panel,
+  SectionTitle,
+  StatusPill,
+  Tile,
+  TileGrid,
+} from "@/components/dashboard/pieces";
+import { useRequireAuth } from "@/components/dashboard/useRequireAuth";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  primaryCurrency,
+  sumAccounts,
+  useCustomerAccounts,
+  useCustomerProfile,
+  useCustomerRewards,
+  useCustomerTransactions,
+} from "@/lib/customer-data";
+import { formatMoney } from "@/lib/money";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -23,491 +52,311 @@ export const Route = createFileRoute("/dashboard")({
       {
         name: "description",
         content:
-          "View your GrowthBridge Bank accounts, balances, cards, investments, and recent activity.",
+          "Your GrowthBridge Bank dashboard: balance, quick transfers, services, savings, investments, and recent activity.",
       },
+      { property: "og:title", content: "Dashboard | GrowthBridge Bank" },
+      {
+        property: "og:description",
+        content: "Manage your GrowthBridge Bank money in one clean, secure place.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "noindex" },
     ],
   }),
   component: DashboardPage,
 });
 
-type Profile = {
-  first_name: string;
-  last_name: string;
-  email: string;
-  username: string | null;
-  kyc_status: string;
-};
-
-type Account = {
-  id: string;
-  display_name: string;
-  type: string;
-  current_cents: number;
-  available_cents: number;
-  currency: string;
-  status: string;
-};
-
-type Transaction = {
-  id: string;
-  amount_cents: number;
-  description: string | null;
-  merchant: string | null;
-  posted_at: string;
-  status: string;
-};
-
-function formatMoney(cents: number, currency = "USD") {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency,
-  }).format(cents / 100);
-}
-
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(value));
-}
-
 function DashboardPage() {
-  const navigate = useNavigate();
+  const ready = useRequireAuth();
+  const [hidden, setHidden] = useState(false);
 
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [accounts, setAccounts] = useState<Account[]>([]);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
+  const profile = useCustomerProfile();
+  const accounts = useCustomerAccounts();
+  const transactions = useCustomerTransactions(6);
+  const rewards = useCustomerRewards();
 
-  async function loadDashboard(showRefresh = false) {
-    if (showRefresh) {
-      setRefreshing(true);
-    } else {
-      setLoading(true);
-    }
-
-    try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError || !user) {
-        await navigate({ to: "/login" });
-        return;
-      }
-
-      const [profileResult, accountsResult, transactionsResult] =
-        await Promise.all([
-          supabase
-            .from("profiles")
-            .select(
-              "first_name,last_name,email,username,kyc_status",
-            )
-            .eq("id", user.id)
-            .maybeSingle(),
-
-          supabase
-            .from("accounts")
-            .select(
-              "id,display_name,type,current_cents,available_cents,currency,status",
-            )
-            .eq("user_id", user.id)
-            .order("opened_at", { ascending: false }),
-
-          supabase
-            .from("transactions")
-            .select(
-              "id,amount_cents,description,merchant,posted_at,status",
-            )
-            .eq("user_id", user.id)
-            .order("posted_at", { ascending: false })
-            .limit(5),
-        ]);
-
-      if (profileResult.error) {
-        throw profileResult.error;
-      }
-
-      if (accountsResult.error) {
-        throw accountsResult.error;
-      }
-
-      if (transactionsResult.error) {
-        throw transactionsResult.error;
-      }
-
-      setProfile(profileResult.data as Profile | null);
-      setAccounts((accountsResult.data ?? []) as Account[]);
-      setTransactions((transactionsResult.data ?? []) as Transaction[]);
-    } catch (error) {
-      console.error("Dashboard loading error:", error);
-
-      toast.error("Unable to load your dashboard", {
-        description:
-          error instanceof Error
-            ? error.message
-            : "Please try again.",
-      });
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  }
-
-  useEffect(() => {
-    void loadDashboard();
-  }, []);
-
-  async function handleSignOut() {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      toast.error("Could not sign out", {
-        description: error.message,
-      });
-      return;
-    }
-
-    toast.success("You have been signed out.");
-
-    await navigate({ to: "/login" });
-  }
-
-  const totalBalance = accounts.reduce(
-    (total, account) => total + account.current_cents,
-    0,
+  const currency = primaryCurrency(accounts.data);
+  const spendingAccounts = (accounts.data ?? []).filter(
+    (account) => account.type === "checking",
   );
+  const availableCents = (spendingAccounts.length ? spendingAccounts : (accounts.data ?? []))
+    .reduce((total, account) => total + (account.available_cents ?? 0), 0);
 
-  const firstName = profile?.first_name || "Customer";
+  const savingsCents = sumAccounts(accounts.data, "savings");
+  const investmentCents = sumAccounts(accounts.data, "investment");
+  const rewardsCents = (rewards.data ?? [])
+    .filter((reward) => reward.status === "available")
+    .reduce((total, reward) => total + (reward.amount_cents ?? 0), 0);
 
-  if (loading) {
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
+  const todayInflowCents = (transactions.data ?? [])
+    .filter(
+      (txn) =>
+        txn.direction === "credit" &&
+        txn.status === "completed" &&
+        new Date(txn.posted_at) >= todayStart,
+    )
+    .reduce((total, txn) => total + Math.abs(txn.amount_cents), 0);
+
+  const money = (cents: number) => formatMoney(cents, currency);
+
+  if (!ready) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="text-center">
-          <div className="mx-auto mb-4 size-10 animate-spin rounded-full border-4 border-muted border-t-primary" />
-
-          <p className="text-sm text-muted-foreground">
-            Loading your dashboard...
-          </p>
-        </div>
+      <div className="grid min-h-screen place-items-center bg-muted/40">
+        <div className="size-9 animate-spin rounded-full border-4 border-muted border-t-emerald" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-card">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Landmark className="size-5" />
-            </div>
-
-            <div>
-              <p className="font-display text-lg font-bold">
-                GrowthBridge
-              </p>
-
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                Bank
-              </p>
-            </div>
-          </Link>
-
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => void loadDashboard(true)}
-              disabled={refreshing}
-              aria-label="Refresh dashboard"
-            >
-              <RefreshCw
-                className={`size-4 ${
-                  refreshing ? "animate-spin" : ""
-                }`}
-              />
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => void handleSignOut()}
-            >
-              <LogOut className="mr-2 size-4" />
-              Sign Out
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:py-10">
-        <div className="mb-8">
-          <p className="text-sm text-muted-foreground">
-            Welcome back
-          </p>
-
-          <h1 className="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">
-            Hello, {firstName}
-          </h1>
-
-          <p className="mt-2 text-sm text-muted-foreground">
-            Here's an overview of your GrowthBridge financial accounts.
-          </p>
-        </div>
-
-        <div className="mb-8 flex flex-col gap-4 rounded-xl border border-border bg-card p-5 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-start gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-secondary">
-              <ShieldCheck className="size-5 text-primary" />
-            </div>
-
-            <div>
-              <h2 className="font-semibold">
-                Account security
-              </h2>
-
-              <p className="mt-1 text-sm text-muted-foreground">
-                KYC status:{" "}
-                <span className="font-medium capitalize text-foreground">
-                  {profile?.kyc_status || "pending"}
-                </span>
-              </p>
-            </div>
-          </div>
-
-          <Link to="/security-overview">
-            <Button variant="outline" size="sm">
-              Security settings
-              <ArrowRight className="ml-2 size-4" />
-            </Button>
-          </Link>
-        </div>
-
-        <section className="mb-8">
-          <div className="rounded-2xl bg-primary p-6 text-primary-foreground shadow-elevated sm:p-8">
-            <p className="text-sm text-primary-foreground/70">
-              Total account balance
-            </p>
-
-            <p className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
-              {formatMoney(totalBalance)}
-            </p>
-
-            <p className="mt-3 text-xs text-primary-foreground/60">
-              Combined balance across your GrowthBridge accounts
-            </p>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <h2 className="mb-4 text-lg font-semibold">
-            Quick actions
-          </h2>
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <Link
-              to="/checking"
-              className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
-            >
-              <Wallet className="size-6 text-primary" />
-
-              <h3 className="mt-4 font-semibold">
-                Checking
-              </h3>
-
-              <p className="mt-1 text-sm text-muted-foreground">
-                View your everyday account.
-              </p>
-
-              <ArrowRight className="mt-4 size-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-
-            <Link
-              to="/savings"
-              className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
-            >
-              <PiggyBank className="size-6 text-primary" />
-
-              <h3 className="mt-4 font-semibold">
-                Savings
-              </h3>
-
-              <p className="mt-1 text-sm text-muted-foreground">
-                Build your savings goals.
-              </p>
-
-              <ArrowRight className="mt-4 size-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-
-            <Link
-              to="/investing"
-              className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
-            >
-              <TrendingUp className="size-6 text-primary" />
-
-              <h3 className="mt-4 font-semibold">
-                Investments
-              </h3>
-
-              <p className="mt-1 text-sm text-muted-foreground">
-                Track your investment portfolio.
-              </p>
-
-              <ArrowRight className="mt-4 size-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-
-            <Link
-              to="/cards-overview"
-              className="group rounded-xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-card"
-            >
-              <CreditCard className="size-6 text-primary" />
-
-              <h3 className="mt-4 font-semibold">
-                Cards
-              </h3>
-
-              <p className="mt-1 text-sm text-muted-foreground">
-                Manage your GBB cards.
-              </p>
-
-              <ArrowRight className="mt-4 size-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold">
-              Your accounts
-            </h2>
-
-            <Link
-              to="/checking"
-              className="text-sm font-medium underline underline-offset-4"
-            >
-              View all
-            </Link>
-          </div>
-
-          {accounts.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-border bg-card p-8 text-center">
-              <Landmark className="mx-auto size-8 text-muted-foreground" />
-
-              <h3 className="mt-3 font-semibold">
-                No accounts yet
-              </h3>
-
-              <p className="mt-1 text-sm text-muted-foreground">
-                Your accounts will appear here once they are created.
-              </p>
-            </div>
+    <AppShell firstName={profile.data?.first_name ?? undefined}>
+      <div className="space-y-6">
+        {/* Balance card */}
+        <section>
+          {accounts.isError ? (
+            <LoadError onRetry={() => void accounts.refetch()} />
           ) : (
-            <div className="grid gap-4 md:grid-cols-2">
-              {accounts.map((account) => (
-                <div
-                  key={account.id}
-                  className="rounded-xl border border-border bg-card p-5 shadow-card"
+            <div className="overflow-hidden rounded-3xl bg-[var(--gradient-emerald)] p-5 text-emerald-foreground shadow-[var(--shadow-elevated)]">
+              <div className="flex items-center gap-2">
+                <p className="text-xs font-medium uppercase tracking-[0.18em] text-emerald-foreground/75">
+                  Available balance
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setHidden((value) => !value)}
+                  aria-label={hidden ? "Show balance" : "Hide balance"}
+                  className="grid size-7 place-items-center rounded-full bg-white/15"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="font-semibold">
-                        {account.display_name}
-                      </p>
+                  {hidden ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                </button>
+              </div>
 
-                      <p className="mt-1 text-xs capitalize text-muted-foreground">
-                        {account.type.replaceAll("_", " ")}
-                      </p>
-                    </div>
+              {accounts.isLoading ? (
+                <Skeleton className="mt-3 h-9 w-48 bg-white/25" />
+              ) : (
+                <p className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                  {hidden ? "••••••" : money(availableCents)}
+                </p>
+              )}
 
-                    <span className="rounded-full bg-secondary px-2.5 py-1 text-xs capitalize">
-                      {account.status}
-                    </span>
-                  </div>
-
-                  <p className="mt-6 text-2xl font-semibold">
-                    {formatMoney(
-                      account.current_cents,
-                      account.currency,
-                    )}
-                  </p>
-
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Available:{" "}
-                    {formatMoney(
-                      account.available_cents,
-                      account.currency,
-                    )}
-                  </p>
-                </div>
-              ))}
+              <div className="mt-5 grid grid-cols-2 gap-2">
+                <Link
+                  to="/transactions"
+                  className="flex min-h-11 items-center justify-center gap-2 rounded-xl bg-white/15 px-3 text-sm font-medium backdrop-blur transition-colors hover:bg-white/25"
+                >
+                  Transaction History
+                  <ArrowRight className="size-4" />
+                </Link>
+                <Link
+                  to="/payments"
+                  className="flex min-h-11 items-center justify-center gap-2 rounded-xl bg-gold px-3 text-sm font-semibold text-gold-foreground transition-opacity hover:opacity-90"
+                >
+                  <Plus className="size-4" />
+                  Add Money
+                </Link>
+              </div>
             </div>
           )}
-        </section>
 
-        <section>
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold">
-              Recent activity
-            </h2>
-
-            <Link
-              to="/personal"
-              className="text-sm font-medium underline underline-offset-4"
-            >
-              View activity
-            </Link>
-          </div>
-
-          <div className="overflow-hidden rounded-xl border border-border bg-card">
-            {transactions.length === 0 ? (
-              <div className="p-8 text-center">
-                <p className="text-sm text-muted-foreground">
-                  No transactions yet.
-                </p>
-              </div>
+          <div className="mt-2 flex items-center justify-between gap-3 rounded-2xl border border-border/70 bg-card px-4 py-3">
+            <div className="min-w-0">
+              <p className="truncate text-xs text-muted-foreground">Business service</p>
+              <p className="truncate text-sm font-medium text-navy">Today&apos;s money in</p>
+            </div>
+            {transactions.isLoading ? (
+              <Skeleton className="h-4 w-20 shrink-0" />
             ) : (
-              <div className="divide-y divide-border">
-                {transactions.map((transaction) => (
-                  <div
-                    key={transaction.id}
-                    className="flex items-center justify-between gap-4 p-4"
-                  >
-                    <div className="min-w-0">
-                      <p className="truncate font-medium">
-                        {transaction.merchant ||
-                          transaction.description ||
-                          "Transaction"}
-                      </p>
-
-                      <p className="mt-1 text-xs text-muted-foreground">
-                        {formatDate(transaction.posted_at)} ·{" "}
-                        <span className="capitalize">
-                          {transaction.status}
-                        </span>
-                      </p>
-                    </div>
-
-                    <p
-                      className={`shrink-0 font-semibold ${
-                        transaction.amount_cents < 0
-                          ? "text-destructive"
-                          : "text-foreground"
-                      }`}
-                    >
-                      {transaction.amount_cents < 0 ? "" : "+"}
-                      {formatMoney(transaction.amount_cents)}
-                    </p>
-                  </div>
-                ))}
-              </div>
+              <p className="shrink-0 font-display text-sm font-semibold text-emerald-deep">
+                {hidden ? "••••" : money(todayInflowCents)}
+              </p>
             )}
           </div>
         </section>
-      </main>
+
+        {/* Quick actions */}
+        <section>
+          <Panel>
+            <TileGrid>
+              <Tile to="/payments" icon={Send} label="To GBB User" />
+              <Tile to="/payments" icon={Building2} label="To Bank" />
+              <Tile to="/payments" icon={ArrowDownToLine} label="Withdraw" />
+              <Tile to="/payments" icon={Plus} label="Add Money" />
+            </TileGrid>
+          </Panel>
+        </section>
+
+        {/* Services */}
+        <section>
+          <SectionTitle>Services</SectionTitle>
+          <Panel>
+            <TileGrid>
+              <Tile to="/payments" icon={Smartphone} label="Airtime" />
+              <Tile to="/payments" icon={Wifi} label="Data" />
+              <Tile to="/payments" icon={Receipt} label="Pay Bills" />
+              <Tile to="/payments" icon={Lightbulb} label="Electricity" />
+              <Tile to="/finance" icon={PiggyBank} label="Savings" />
+              <Tile to="/finance" icon={TrendingUp} label="Investments" />
+              <Tile to="/cards" icon={CreditCard} label="Cards" />
+              <Tile to="/me" icon={LayoutGrid} label="More" />
+            </TileGrid>
+          </Panel>
+        </section>
+
+        {/* Financial overview */}
+        <section>
+          <SectionTitle>Financial overview</SectionTitle>
+          <div className="grid grid-cols-3 gap-2">
+            <OverviewCard
+              label="Savings"
+              icon={PiggyBank}
+              value={money(savingsCents)}
+              loading={accounts.isLoading}
+              hidden={hidden}
+            />
+            <OverviewCard
+              label="Investments"
+              icon={TrendingUp}
+              value={money(investmentCents)}
+              loading={accounts.isLoading}
+              hidden={hidden}
+            />
+            <OverviewCard
+              label="Rewards"
+              icon={Gift}
+              value={money(rewardsCents)}
+              loading={rewards.isLoading}
+              hidden={hidden}
+            />
+          </div>
+        </section>
+
+        {/* Recent transactions */}
+        <section>
+          <SectionTitle
+            action={
+              <Link
+                to="/transactions"
+                className="flex items-center gap-1 text-xs font-medium text-emerald-deep"
+              >
+                View all <ArrowRight className="size-3.5" />
+              </Link>
+            }
+          >
+            Recent transactions
+          </SectionTitle>
+
+          <Panel>
+            {transactions.isError ? (
+              <LoadError onRetry={() => void transactions.refetch()} />
+            ) : transactions.isLoading ? (
+              <ListSkeleton />
+            ) : (transactions.data ?? []).length === 0 ? (
+              <EmptyState
+                title="No transactions yet"
+                description="Your activity will appear here once money moves in or out."
+              />
+            ) : (
+              <ul className="divide-y divide-border/70">
+                {(transactions.data ?? []).map((txn) => (
+                  <li key={txn.id} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
+                    <span
+                      className={
+                        txn.direction === "credit"
+                          ? "grid size-10 shrink-0 place-items-center rounded-full bg-emerald-soft text-emerald-deep"
+                          : "grid size-10 shrink-0 place-items-center rounded-full bg-muted text-navy"
+                      }
+                    >
+                      {txn.direction === "credit" ? (
+                        <ArrowDownToLine className="size-4" />
+                      ) : (
+                        <ArrowUpRight className="size-4" />
+                      )}
+                    </span>
+
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium text-navy">
+                        {txn.merchant || txn.description}
+                      </p>
+                      <p className="truncate text-xs text-muted-foreground">
+                        {txn.type.replace(/_/g, " ")} ·{" "}
+                        {new Date(txn.posted_at).toLocaleString(undefined, {
+                          month: "short",
+                          day: "numeric",
+                          hour: "numeric",
+                          minute: "2-digit",
+                        })}
+                      </p>
+                    </div>
+
+                    <div className="shrink-0 text-right">
+                      <p
+                        className={
+                          txn.direction === "credit"
+                            ? "text-sm font-semibold text-emerald-deep"
+                            : "text-sm font-semibold text-navy"
+                        }
+                      >
+                        {txn.direction === "credit" ? "+" : "-"}
+                        {money(Math.abs(txn.amount_cents))}
+                      </p>
+                      <div className="mt-1">
+                        <StatusPill status={txn.status} />
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Panel>
+        </section>
+
+        {/* Promotion */}
+        <section>
+          <div className="rounded-2xl border border-gold/40 bg-[var(--gradient-gold)] p-5">
+            <p className="font-display text-lg font-semibold text-navy">Grow your money</p>
+            <p className="mt-1 max-w-md text-sm text-navy/80">
+              Put your money to work with GrowthBridge Savings and Investments.
+            </p>
+            <Button asChild className="mt-4 min-h-11 bg-navy text-primary-foreground hover:bg-navy-deep">
+              <Link to="/finance">
+                Explore options <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          </div>
+        </section>
+      </div>
+    </AppShell>
+  );
+}
+
+function OverviewCard({
+  label,
+  value,
+  icon: Icon,
+  loading,
+  hidden,
+}: {
+  label: string;
+  value: string;
+  icon: typeof Signal;
+  loading: boolean;
+  hidden: boolean;
+}) {
+  return (
+    <div className="rounded-2xl border border-border/70 bg-card p-3">
+      <span className="grid size-8 place-items-center rounded-full bg-emerald-soft text-emerald">
+        <Icon className="size-4" />
+      </span>
+      <p className="mt-2 text-[0.6875rem] text-muted-foreground">{label}</p>
+      {loading ? (
+        <Skeleton className="mt-1 h-4 w-16" />
+      ) : (
+        <p className="truncate font-display text-sm font-semibold text-navy">
+          {hidden ? "••••" : value}
+        </p>
+      )}
     </div>
   );
-              }
+}
