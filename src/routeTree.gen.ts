@@ -21,6 +21,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as InvestingRouteImport } from './routes/investing'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as PaymentsRouteImport } from './routes/payments'
 import { Route as PersonalRouteImport } from './routes/personal'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
@@ -92,6 +93,11 @@ const InvestingRoute = InvestingRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentsRoute = PaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PersonalRoute = PersonalRouteImport.update({
@@ -169,6 +175,7 @@ export interface FileRoutesByFullPath {
   '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
   '/login': typeof LoginRoute
+  '/payments': typeof PaymentsRoute
   '/personal': typeof PersonalRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -195,6 +202,7 @@ export interface FileRoutesByTo {
   '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
   '/login': typeof LoginRoute
+  '/payments': typeof PaymentsRoute
   '/personal': typeof PersonalRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -222,6 +230,7 @@ export interface FileRoutesById {
   '/help': typeof HelpRoute
   '/investing': typeof InvestingRoute
   '/login': typeof LoginRoute
+  '/payments': typeof PaymentsRoute
   '/personal': typeof PersonalRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -250,6 +259,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/investing'
     | '/login'
+    | '/payments'
     | '/personal'
     | '/register'
     | '/reset-password'
@@ -276,6 +286,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/investing'
     | '/login'
+    | '/payments'
     | '/personal'
     | '/register'
     | '/reset-password'
@@ -302,6 +313,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/investing'
     | '/login'
+    | '/payments'
     | '/personal'
     | '/register'
     | '/reset-password'
@@ -329,6 +341,7 @@ export interface RootRouteChildren {
   HelpRoute: typeof HelpRoute
   InvestingRoute: typeof InvestingRoute
   LoginRoute: typeof LoginRoute
+  PaymentsRoute: typeof PaymentsRoute
   PersonalRoute: typeof PersonalRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -427,6 +440,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payments': {
+      id: '/payments'
+      path: '/payments'
+      fullPath: '/payments'
+      preLoaderRoute: typeof PaymentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/personal': {
@@ -529,6 +549,7 @@ const rootRouteChildren: RootRouteChildren = {
   HelpRoute: HelpRoute,
   InvestingRoute: InvestingRoute,
   LoginRoute: LoginRoute,
+  PaymentsRoute: PaymentsRoute,
   PersonalRoute: PersonalRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
