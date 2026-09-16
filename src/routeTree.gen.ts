@@ -31,6 +31,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RewardsOverviewRouteImport } from './routes/rewards-overview'
 import { Route as SavingsRouteImport } from './routes/savings'
 import { Route as SecurityOverviewRouteImport } from './routes/security-overview'
+import { Route as TransactionsRouteImport } from './routes/transactions'
 import { Route as LegalDisclosuresRouteImport } from './routes/legal/disclosures'
 import { Route as LegalElectronicCommunicationsRouteImport } from './routes/legal/electronic-communications'
 import { Route as LegalInvestmentRiskRouteImport } from './routes/legal/investment-risk'
@@ -148,6 +149,11 @@ const SecurityOverviewRoute = SecurityOverviewRouteImport.update({
   path: '/security-overview',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TransactionsRoute = TransactionsRouteImport.update({
+  id: '/transactions',
+  path: '/transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LegalDisclosuresRoute = LegalDisclosuresRouteImport.update({
   id: '/legal/disclosures',
   path: '/legal/disclosures',
@@ -203,6 +209,7 @@ export interface FileRoutesByFullPath {
   '/rewards-overview': typeof RewardsOverviewRoute
   '/savings': typeof SavingsRoute
   '/security-overview': typeof SecurityOverviewRoute
+  '/transactions': typeof TransactionsRoute
   '/legal/disclosures': typeof LegalDisclosuresRoute
   '/legal/electronic-communications': typeof LegalElectronicCommunicationsRoute
   '/legal/investment-risk': typeof LegalInvestmentRiskRoute
@@ -233,6 +240,7 @@ export interface FileRoutesByTo {
   '/rewards-overview': typeof RewardsOverviewRoute
   '/savings': typeof SavingsRoute
   '/security-overview': typeof SecurityOverviewRoute
+  '/transactions': typeof TransactionsRoute
   '/legal/disclosures': typeof LegalDisclosuresRoute
   '/legal/electronic-communications': typeof LegalElectronicCommunicationsRoute
   '/legal/investment-risk': typeof LegalInvestmentRiskRoute
@@ -264,6 +272,7 @@ export interface FileRoutesById {
   '/rewards-overview': typeof RewardsOverviewRoute
   '/savings': typeof SavingsRoute
   '/security-overview': typeof SecurityOverviewRoute
+  '/transactions': typeof TransactionsRoute
   '/legal/disclosures': typeof LegalDisclosuresRoute
   '/legal/electronic-communications': typeof LegalElectronicCommunicationsRoute
   '/legal/investment-risk': typeof LegalInvestmentRiskRoute
@@ -296,6 +305,7 @@ export interface FileRouteTypes {
     | '/rewards-overview'
     | '/savings'
     | '/security-overview'
+    | '/transactions'
     | '/legal/disclosures'
     | '/legal/electronic-communications'
     | '/legal/investment-risk'
@@ -326,6 +336,7 @@ export interface FileRouteTypes {
     | '/rewards-overview'
     | '/savings'
     | '/security-overview'
+    | '/transactions'
     | '/legal/disclosures'
     | '/legal/electronic-communications'
     | '/legal/investment-risk'
@@ -356,6 +367,7 @@ export interface FileRouteTypes {
     | '/rewards-overview'
     | '/savings'
     | '/security-overview'
+    | '/transactions'
     | '/legal/disclosures'
     | '/legal/electronic-communications'
     | '/legal/investment-risk'
@@ -387,6 +399,7 @@ export interface RootRouteChildren {
   RewardsOverviewRoute: typeof RewardsOverviewRoute
   SavingsRoute: typeof SavingsRoute
   SecurityOverviewRoute: typeof SecurityOverviewRoute
+  TransactionsRoute: typeof TransactionsRoute
   LegalDisclosuresRoute: typeof LegalDisclosuresRoute
   LegalElectronicCommunicationsRoute: typeof LegalElectronicCommunicationsRoute
   LegalInvestmentRiskRoute: typeof LegalInvestmentRiskRoute
@@ -551,6 +564,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecurityOverviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/transactions': {
+      id: '/transactions'
+      path: '/transactions'
+      fullPath: '/transactions'
+      preLoaderRoute: typeof TransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/legal/disclosures': {
       id: '/legal/disclosures'
       path: '/legal/disclosures'
@@ -619,6 +639,7 @@ const rootRouteChildren: RootRouteChildren = {
   RewardsOverviewRoute: RewardsOverviewRoute,
   SavingsRoute: SavingsRoute,
   SecurityOverviewRoute: SecurityOverviewRoute,
+  TransactionsRoute: TransactionsRoute,
   LegalDisclosuresRoute: LegalDisclosuresRoute,
   LegalElectronicCommunicationsRoute: LegalElectronicCommunicationsRoute,
   LegalInvestmentRiskRoute: LegalInvestmentRiskRoute,
