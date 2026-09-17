@@ -16,6 +16,7 @@ import type { ReactNode } from "react";
 import { toast } from "sonner";
 
 import logo from "@/assets/gbb-logo.png.asset.json";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 
@@ -74,7 +75,7 @@ export function AppShell({
   const initials = (firstName ?? "G").slice(0, 1).toUpperCase();
 
   return (
-    <div className="min-h-screen bg-muted/40">
+    <div className="min-h-screen bg-sidebar text-sidebar-foreground lg:bg-muted/40 lg:text-foreground">
       {/* Desktop sidebar */}
       <aside className="fixed inset-y-0 left-0 hidden w-64 flex-col border-r border-sidebar-border bg-sidebar px-4 py-6 lg:flex">
         <Link to="/dashboard" className="flex items-center gap-3 px-2">
@@ -102,7 +103,7 @@ export function AppShell({
                 key={item.to}
                 to={item.to}
                 className={cn(
-                  "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+                  "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                   active
                     ? "bg-emerald text-emerald-foreground"
                     : "text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-foreground",
@@ -115,19 +116,20 @@ export function AppShell({
           })}
         </nav>
 
-        <button
+        <Button
           type="button"
+          variant="ghost"
           onClick={handleSignOut}
-          className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-sidebar-foreground/75 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground"
+          className="h-auto justify-start rounded-lg px-3 py-2.5 text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-foreground"
         >
           <LogOut className="size-4 shrink-0" />
           Sign out
-        </button>
+        </Button>
       </aside>
 
       <div className="lg:pl-64">
         {/* Sticky header */}
-        <header className="sticky top-0 z-30 border-b border-border/70 bg-background/95 backdrop-blur">
+        <header className="sticky top-0 z-30 border-b border-sidebar-border bg-sidebar/95 backdrop-blur lg:border-border/70 lg:bg-background/95">
           <div className="mx-auto grid max-w-5xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 sm:px-6">
             <div className="flex min-w-0 items-center gap-3">
               <img
@@ -138,10 +140,10 @@ export function AppShell({
                 height={36}
               />
               <div className="min-w-0">
-                <p className="truncate text-xs text-muted-foreground">
+                <p className="truncate text-xs text-sidebar-foreground/55 lg:text-muted-foreground">
                   {title ?? `${greeting()},`}
                 </p>
-                <p className="truncate font-display text-base font-semibold text-navy">
+                <p className="truncate font-display text-base font-semibold text-sidebar-foreground lg:text-navy">
                   {title ? "GrowthBridge Bank" : (firstName ?? "Customer")}
                 </p>
               </div>
@@ -151,21 +153,21 @@ export function AppShell({
               <Link
                 to="/help"
                 aria-label="Help"
-                className="grid size-10 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-navy"
+                className="grid size-10 place-items-center rounded-full text-sidebar-foreground/65 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground lg:text-muted-foreground lg:hover:bg-muted lg:hover:text-navy"
               >
                 <HelpCircle className="size-5" />
               </Link>
               <Link
                 to="/me"
                 aria-label="Notifications"
-                className="grid size-10 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-navy"
+                className="grid size-10 place-items-center rounded-full text-sidebar-foreground/65 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground lg:text-muted-foreground lg:hover:bg-muted lg:hover:text-navy"
               >
                 <Bell className="size-5" />
               </Link>
               <Link
                 to="/me"
                 aria-label="Profile"
-                className="grid size-10 shrink-0 place-items-center rounded-full bg-emerald text-sm font-semibold text-emerald-foreground"
+                className="grid size-10 shrink-0 place-items-center rounded-full border border-sidebar-foreground/15 bg-sidebar-accent text-sm font-semibold text-sidebar-foreground"
               >
                 {initials}
               </Link>
@@ -177,7 +179,7 @@ export function AppShell({
       </div>
 
       {/* Mobile bottom nav */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/98 backdrop-blur lg:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-sidebar-border bg-sidebar/95 backdrop-blur lg:hidden">
         <ul className="mx-auto grid max-w-md grid-cols-5">
           {primaryNav.map((item) => {
             const active = pathname === item.to;
@@ -187,7 +189,7 @@ export function AppShell({
                   to={item.to}
                   className={cn(
                     "flex flex-col items-center gap-1 py-2.5 text-[0.6875rem] font-medium transition-colors",
-                    active ? "text-emerald" : "text-muted-foreground",
+                    active ? "text-emerald" : "text-sidebar-foreground/45",
                   )}
                 >
                   <item.icon className={cn("size-5", active && "stroke-[2.4]")} />

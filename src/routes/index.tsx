@@ -12,7 +12,6 @@ import {
   Smartphone,
   Target,
 } from "lucide-react";
-import heroImage from "@/assets/hero-banking.jpg";
 import { MarketingShell } from "@/components/marketing/MarketingPage";
 import { Button } from "@/components/ui/button";
 
@@ -102,8 +101,8 @@ function Index() {
   return (
     <MarketingShell>
       <section className="relative overflow-hidden bg-gradient-navy text-primary-foreground">
-        <div className="mx-auto grid w-full max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:py-24">
-          <div>
+        <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:py-24">
+          <div className="max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">GrowthBridge Bank · GBB</p>
             <h1 className="mt-5 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
               Building Your <span className="text-gradient-gold">Financial Future.</span>
@@ -130,18 +129,6 @@ function Index() {
               GBB is a financial technology platform, not a chartered bank. Deposits, cards, payments, and investing are
               delivered through regulated partner institutions once connected.
             </p>
-          </div>
-
-          <div className="relative">
-            <div className="overflow-hidden rounded-2xl border border-primary-foreground/15 shadow-elevated">
-              <img
-                src={heroImage}
-                alt="A GrowthBridge Bank customer reviewing her accounts on a mobile device"
-                width={1280}
-                height={1600}
-                className="aspect-4/5 size-full object-cover"
-              />
-            </div>
           </div>
         </div>
       </section>

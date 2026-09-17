@@ -16,7 +16,7 @@ export function SectionTitle({
 }) {
   return (
     <div className="mb-3 flex items-center justify-between gap-3">
-      <h2 className="font-display text-base font-semibold text-navy">{children}</h2>
+      <h2 className="font-display text-base font-semibold text-sidebar-foreground lg:text-navy">{children}</h2>
       {action}
     </div>
   );
