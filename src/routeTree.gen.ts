@@ -34,7 +34,11 @@ import { Route as SavingsRouteImport } from './routes/savings'
 import { Route as SecurityOverviewRouteImport } from './routes/security-overview'
 import { Route as TransactionsRouteImport } from './routes/transactions'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminDepositsRouteImport } from './routes/admin.deposits'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminWithdrawalsRouteImport } from './routes/admin.withdrawals'
 import { Route as LegalDisclosuresRouteImport } from './routes/legal/disclosures'
 import { Route as LegalElectronicCommunicationsRouteImport } from './routes/legal/electronic-communications'
 import { Route as LegalInvestmentRiskRouteImport } from './routes/legal/investment-risk'
@@ -167,9 +171,29 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDepositsRoute = AdminDepositsRouteImport.update({
+  id: '/deposits',
+  path: '/deposits',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminWithdrawalsRoute = AdminWithdrawalsRouteImport.update({
+  id: '/withdrawals',
+  path: '/withdrawals',
   getParentRoute: () => AdminRoute,
 } as any)
 const LegalDisclosuresRoute = LegalDisclosuresRouteImport.update({
@@ -229,7 +253,11 @@ export interface FileRoutesByFullPath {
   '/savings': typeof SavingsRoute
   '/security-overview': typeof SecurityOverviewRoute
   '/transactions': typeof TransactionsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/deposits': typeof AdminDepositsRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/admin/withdrawals': typeof AdminWithdrawalsRoute
   '/legal/disclosures': typeof LegalDisclosuresRoute
   '/legal/electronic-communications': typeof LegalElectronicCommunicationsRoute
   '/legal/investment-risk': typeof LegalInvestmentRiskRoute
@@ -262,7 +290,11 @@ export interface FileRoutesByTo {
   '/savings': typeof SavingsRoute
   '/security-overview': typeof SecurityOverviewRoute
   '/transactions': typeof TransactionsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/deposits': typeof AdminDepositsRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/admin/withdrawals': typeof AdminWithdrawalsRoute
   '/legal/disclosures': typeof LegalDisclosuresRoute
   '/legal/electronic-communications': typeof LegalElectronicCommunicationsRoute
   '/legal/investment-risk': typeof LegalInvestmentRiskRoute
@@ -297,7 +329,11 @@ export interface FileRoutesById {
   '/savings': typeof SavingsRoute
   '/security-overview': typeof SecurityOverviewRoute
   '/transactions': typeof TransactionsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/deposits': typeof AdminDepositsRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/admin/withdrawals': typeof AdminWithdrawalsRoute
   '/legal/disclosures': typeof LegalDisclosuresRoute
   '/legal/electronic-communications': typeof LegalElectronicCommunicationsRoute
   '/legal/investment-risk': typeof LegalInvestmentRiskRoute
@@ -333,7 +369,11 @@ export interface FileRouteTypes {
     | '/savings'
     | '/security-overview'
     | '/transactions'
+    | '/admin/dashboard'
+    | '/admin/deposits'
     | '/admin/login'
+    | '/admin/users'
+    | '/admin/withdrawals'
     | '/legal/disclosures'
     | '/legal/electronic-communications'
     | '/legal/investment-risk'
@@ -366,7 +406,11 @@ export interface FileRouteTypes {
     | '/savings'
     | '/security-overview'
     | '/transactions'
+    | '/admin/dashboard'
+    | '/admin/deposits'
     | '/admin/login'
+    | '/admin/users'
+    | '/admin/withdrawals'
     | '/legal/disclosures'
     | '/legal/electronic-communications'
     | '/legal/investment-risk'
@@ -400,7 +444,11 @@ export interface FileRouteTypes {
     | '/savings'
     | '/security-overview'
     | '/transactions'
+    | '/admin/dashboard'
+    | '/admin/deposits'
     | '/admin/login'
+    | '/admin/users'
+    | '/admin/withdrawals'
     | '/legal/disclosures'
     | '/legal/electronic-communications'
     | '/legal/investment-risk'
@@ -620,11 +668,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/deposits': {
+      id: '/admin/deposits'
+      path: '/deposits'
+      fullPath: '/admin/deposits'
+      preLoaderRoute: typeof AdminDepositsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/login': {
       id: '/admin/login'
       path: '/login'
       fullPath: '/admin/login'
       preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/withdrawals': {
+      id: '/admin/withdrawals'
+      path: '/withdrawals'
+      fullPath: '/admin/withdrawals'
+      preLoaderRoute: typeof AdminWithdrawalsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/legal/disclosures': {
@@ -673,12 +749,20 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminDepositsRoute: typeof AdminDepositsRoute
   AdminLoginRoute: typeof AdminLoginRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  AdminWithdrawalsRoute: typeof AdminWithdrawalsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminDepositsRoute: AdminDepositsRoute,
   AdminLoginRoute: AdminLoginRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  AdminWithdrawalsRoute: AdminWithdrawalsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
