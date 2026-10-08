@@ -25,7 +25,7 @@ export function AdminShell({ children, email, roles }: { children: ReactNode; em
     await queryClient.cancelQueries(); queryClient.clear();
     const { error } = await supabase.auth.signOut();
     if (error) { toast.error("Could not sign out"); return; }
-    await navigate({ to: "/admin/login", replace: true });
+    await navigate({ to: "/admin/login", search: { reason: undefined }, replace: true });
   }
   const sidebar = (
     <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
